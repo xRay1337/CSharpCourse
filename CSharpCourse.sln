@@ -3,9 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.28803.202
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CSharpCourse", "CSharpCourse.csproj", "{F9ADD0FF-91EF-438A-8B13-D59D3DDE9083}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Shapes", "Shapes\Shapes.csproj", "{BF12636D-BABC-425C-82F3-5135F0CEFEEF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Shapes", "..\Shapes\Shapes.csproj", "{1DFB3F3D-A0AE-474F-854F-D50534D08722}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Vectors", "Vectors\Vectors.csproj", "{5A00205D-0BD3-4050-8EC2-8186503F0B88}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -13,14 +13,14 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{F9ADD0FF-91EF-438A-8B13-D59D3DDE9083}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{F9ADD0FF-91EF-438A-8B13-D59D3DDE9083}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{F9ADD0FF-91EF-438A-8B13-D59D3DDE9083}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{F9ADD0FF-91EF-438A-8B13-D59D3DDE9083}.Release|Any CPU.Build.0 = Release|Any CPU
-		{1DFB3F3D-A0AE-474F-854F-D50534D08722}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{1DFB3F3D-A0AE-474F-854F-D50534D08722}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{1DFB3F3D-A0AE-474F-854F-D50534D08722}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{1DFB3F3D-A0AE-474F-854F-D50534D08722}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BF12636D-BABC-425C-82F3-5135F0CEFEEF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BF12636D-BABC-425C-82F3-5135F0CEFEEF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BF12636D-BABC-425C-82F3-5135F0CEFEEF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BF12636D-BABC-425C-82F3-5135F0CEFEEF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5A00205D-0BD3-4050-8EC2-8186503F0B88}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5A00205D-0BD3-4050-8EC2-8186503F0B88}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5A00205D-0BD3-4050-8EC2-8186503F0B88}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5A00205D-0BD3-4050-8EC2-8186503F0B88}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
