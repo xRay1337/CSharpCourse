@@ -33,6 +33,7 @@ namespace Shapes
 
             Console.WriteLine("Первая фигура по площади: {0}", shapes[shapes.Length - 1].ToString());
             Console.WriteLine("Вторая фигура по площади: {0}", shapes[shapes.Length - 2].ToString());
+            Console.WriteLine(shapes[4].GetHashCode());
 
             Console.ReadKey();
         }

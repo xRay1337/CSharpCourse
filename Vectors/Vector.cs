@@ -146,7 +146,13 @@ namespace Vectors
 
         public override int GetHashCode()
         {
-            return base.GetHashCode() + (int)this.GetLength();
+            int prime = 37;
+            int hash = 1;
+
+            hash = prime * hash + GetSize();
+            hash = prime * hash + (int)GetLength().GetHashCode();
+
+            return hash;
         }
 
         public static Vector Addition(Vector vector1, Vector vector2)

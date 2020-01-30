@@ -85,7 +85,19 @@ namespace Shapes
 
         public override int GetHashCode()
         {
-            return GetArea().GetHashCode();
+            int prime = 37;
+            int hash = 1;
+
+            hash = prime * hash + (int)x1;
+            hash = prime * hash + (int)x2;
+            hash = prime * hash + (int)x3;
+            hash = prime * hash + (int)y1;
+            hash = prime * hash + (int)y2;
+            hash = prime * hash + (int)y3;
+
+            hash = prime * hash + GetArea().GetHashCode();
+
+            return hash;
         }
 
         public override bool Equals(object obj)
