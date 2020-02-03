@@ -1,0 +1,39 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<countries>
+  <country name="Germany">
+    <nameRu>Германия</nameRu>
+    <nameEn>Germany</nameEn>
+    <population>83149300</population>
+    <countryCode>+49</countryCode>
+    <currencyCode>978</currencyCode>
+    <cities>
+      <city>Berlin</city>
+      <city>Hamburg</city>
+      <city>Munich</city>
+    </cities>
+  </country>
+  <country name="Russia">
+    <nameRu>Россия</nameRu>
+    <nameEn>Russia</nameEn>
+    <population>146780720</population>
+    <countryCode>+7</countryCode>
+    <currencyCode>810</currencyCode>
+    <cities>
+      <city>Moscow</city>
+      <city>St. Petersburg</city>
+      <city>Novosibirsk</city>
+    </cities>
+  </country>
+  <country name="USA">
+    <nameRu>США</nameRu>
+    <nameEn>USA</nameEn>
+    <population>329275158</population>
+    <countryCode>+1</countryCode>
+    <currencyCode>840</currencyCode>
+    <cities>
+      <city>New York City</city>
+      <city>Los Angeles</city>
+      <city>Chicago</city>
+    </cities>
+  </country>
+</countries>

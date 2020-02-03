@@ -1,0 +1,43 @@
+﻿{
+  "countries": [
+    {
+      "name": "Germany",
+      "nameRu": "Германия",
+      "nameEn": "Germany",
+      "population": 83149300,
+      "countryCode": "+49",
+      "currencyCode": 978,
+      "cities": [
+        { "city": "Berlin" },
+        { "city": "Hamburg" },
+        { "city": "Munich" }
+      ]
+    },
+    {
+      "name": "Russia",
+      "nameRu": "Россия",
+      "nameEn": "Russia",
+      "population": 146780720,
+      "countryCode": "+7",
+      "currencyCode": 810,
+      "cities": [
+        { "city": "Moscow" },
+        { "city": "St. Petersburg" },
+        { "city": "Novosibirsk" }
+      ]
+    },
+    {
+      "name": "USA",
+      "nameRu": "США",
+      "nameEn": "USA",
+      "population": 329275158,
+      "countryCode": "+1",
+      "currencyCode": 840,
+      "cities": [
+        { "city": "New York City" },
+        { "city": "Los Angeles" },
+        { "city": "Chicago" }
+      ]
+    }
+  ]
+}
