@@ -23,7 +23,7 @@ namespace Diapason
 
         public double GetLength()
         {
-            return Math.Abs(From - To);
+            return To - From;
         }
 
         public bool IsInside(double number)
