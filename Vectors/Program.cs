@@ -33,11 +33,11 @@ namespace Vectors
 
             Console.WriteLine("Размерность первого вектора: {0}", vector1.GetSize());
 
-            Console.WriteLine("Сумма векторов {0} и {1} равна {2}", vector3.ToString(), vector4.ToString(), vector3.Addition(vector4).ToString());
+            Console.WriteLine("Сумма векторов {0} и {1} равна {2}", vector3.ToString(), vector4.ToString(), vector3.Add(vector4).ToString());
 
-            Console.WriteLine("Разность векторов {0} и {1} равна {2}", vector3.ToString(), vector4.ToString(), vector3.Subtraction(vector4).ToString());
+            Console.WriteLine("Разность векторов {0} и {1} равна {2}", vector3.ToString(), vector4.ToString(), vector3.Subtract(vector4).ToString());
 
-            Console.WriteLine("Умножение вектора {0} на скаляр {1} равно {2}", vector3.ToString(), 5, vector3.MultiplicationByScalar(5).ToString());
+            Console.WriteLine("Умножение вектора {0} на скаляр {1} равно {2}", vector3.ToString(), 5, vector3.Multiply(5).ToString());
 
             Console.WriteLine("Разворот вектора {0} равен {1}", vector3.ToString(), vector3.Reverse().ToString());
 
@@ -47,7 +47,7 @@ namespace Vectors
 
             Console.WriteLine("Меняем X вектора {0} на {1}, сейчас вектор выглядит так: {2}", vector3.ToString(), 25, vector3.SetElement(0, 25).ToString());
 
-            Console.WriteLine("Метод Equals для {0} и {1} возвращает: {2}", vector3.ToString(), vector4.ToString(), vector3.Equals(vector4));
+            Console.WriteLine("Метод Equals для {0} и {1} возвращает: {2}", vector3.ToString(), vector4.ToString(), vector3.Equals(null));
 
             Console.WriteLine("Хэш-кодом для вектора {0} является: {1}", vector3.ToString(), vector3.GetHashCode());
 
@@ -55,11 +55,11 @@ namespace Vectors
             Console.WriteLine("Статические методы:");
             Console.WriteLine();
 
-            Console.WriteLine("Сумма векторов {0} и {1} равна {2}", vector3.ToString(), vector4.ToString(), Vector.Addition(vector3, vector4).ToString());
+            Console.WriteLine("Сумма векторов {0} и {1} равна {2}", vector3.ToString(), vector4.ToString(), Vector.Add(vector3, vector4).ToString());
 
-            Console.WriteLine("Разность векторов {0} и {1} равна {2}", vector3.ToString(), vector4.ToString(), Vector.Subtraction(vector3, vector4).ToString());
+            Console.WriteLine("Разность векторов {0} и {1} равна {2}", vector3.ToString(), vector4.ToString(), Vector.Subtract(vector3, vector4).ToString());
 
-            Console.WriteLine("Скалярное произведение векторов {0} и {1} равно {2}", vector3.ToString(), vector4.ToString(), Vector.ScalarMultiplication(vector3, vector4).ToString());
+            Console.WriteLine("Скалярное произведение векторов {0} и {1} равно {2}", vector3.ToString(), vector4.ToString(), Vector.Multiply(vector3, vector4).ToString());
 
 
             Vector vector5 = new Vector(arr1);

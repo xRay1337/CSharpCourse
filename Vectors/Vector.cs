@@ -1,89 +1,132 @@
 ﻿using System;
+using System.Text;
 
 namespace Vectors
 {
     class Vector
     {
-        private double[] vector;
+        private double[] matrix;
 
         public Vector(int size)
         {
-            vector = new double[size];
+            if (size > 0)
+            {
+                matrix = new double[size];
+            }
+            else
+            {
+                throw new Exception("Need a positive number.");
+            }
         }
 
         public Vector(Vector vector)
         {
-            this.vector = vector.vector;
+            matrix = new double[vector.matrix.Length];
+            Array.Copy(vector.matrix, 0, matrix, 0, vector.matrix.Length);
         }
 
         public Vector(double[] array)
         {
-            int arrayLength = array.Length;
-            vector = new double[arrayLength];
-            Array.Copy(array, 0, vector, 0, arrayLength);
+            if (array.Length > 0)
+            {
+                int arrayLength = array.Length;
+                matrix = new double[arrayLength];
+                Array.Copy(array, 0, matrix, 0, arrayLength);
+            }
+            else
+            {
+                throw new Exception("Need a positive array length.");
+            }
         }
 
         public Vector(int size, double[] array)
         {
-            vector = new double[size];
-            array.CopyTo(vector, 0);
+            if (size > 0 && size >= array.Length)
+            {
+                matrix = new double[size];
+                array.CopyTo(matrix, 0);
+            }
+            else
+            {
+                throw new Exception("Need a positive size or array length.");
+            }
         }
 
         public int GetSize()
         {
-            return vector.Length;
+            return matrix.Length;
         }
 
         public override string ToString()
         {
-            return "{ " + string.Join(", ", vector) + " }";
+            StringBuilder stringBuilder = new StringBuilder();
+            stringBuilder.Append("{ ").Append(string.Join(", ", matrix)).Append(" }");
+            return stringBuilder.ToString();
         }
 
-        public Vector Addition(Vector vector)
+        public Vector Add(Vector vector)
         {
-            int vectorSize = this.vector.Length;
+            int maxLength = Math.Max(matrix.Length, vector.matrix.Length);
 
-            for (int i = 0; i < vectorSize; i++)
+            double[] tempMatrix = new double[maxLength];
+
+            for (int i = 0; i < maxLength; i++)
             {
+                double operand1 = 0;
                 double operand2 = 0;
 
-                if (i < vector.vector.Length)
+                if (i < matrix.Length)
                 {
-                    operand2 = vector.vector[i];
+                    operand1 = matrix[i];
                 }
 
-                this.vector[i] += operand2;
+                if (i < vector.matrix.Length)
+                {
+                    operand2 = vector.matrix[i];
+                }
+
+                tempMatrix[i] = operand1 + operand2;
             }
+
+            matrix = tempMatrix;
 
             return this;
         }
 
-        public Vector Subtraction(Vector vector)
+        public Vector Subtract(Vector vector)
         {
-            int vectorSize = this.vector.Length;
+            int maxLength = Math.Max(matrix.Length, vector.matrix.Length);
 
-            for (int i = 0; i < vectorSize; i++)
+            double[] tempMatrix = new double[maxLength];
+
+            for (int i = 0; i < maxLength; i++)
             {
+                double operand1 = 0;
                 double operand2 = 0;
 
-                if (i < vector.vector.Length)
+                if (i < matrix.Length)
                 {
-                    operand2 = vector.vector[i];
+                    operand1 = matrix[i];
                 }
 
-                this.vector[i] -= operand2;
+                if (i < vector.matrix.Length)
+                {
+                    operand2 = vector.matrix[i];
+                }
+
+                tempMatrix[i] = operand1 - operand2;
             }
+
+            matrix = tempMatrix;
 
             return this;
         }
 
-        public Vector MultiplicationByScalar(int scalar)
+        public Vector Multiply(int scalar)
         {
-            int vectorSize = this.vector.Length;
-
-            for (int i = 0; i < vectorSize; i++)
+            for (int i = 0; i < matrix.Length; i++)
             {
-                this.vector[i] *= scalar;
+                matrix[i] *= scalar;
             }
 
             return this;
@@ -91,19 +134,18 @@ namespace Vectors
 
         public Vector Reverse()
         {
-            MultiplicationByScalar(-1);
+            Multiply(-1);
 
             return this;
         }
 
         public double GetLength()
         {
-            int vectorSize = this.vector.Length;
             double squareSum = 0;
 
-            for (int i = 0; i < vectorSize; i++)
+            foreach (var e in matrix)
             {
-                squareSum += Math.Pow(this.vector[i], 2);
+                squareSum += Math.Pow(e, 2);
             }
 
             return Math.Sqrt(squareSum);
@@ -111,34 +153,41 @@ namespace Vectors
 
         public double GetElement(int index)
         {
-            return vector[index];
+            return matrix[index];
         }
 
         public Vector SetElement(int index, double element)
         {
-            vector[index] = element;
+            matrix[index] = element;
 
             return this;
         }
 
         public override bool Equals(object obj)
         {
-            int vectorSize = this.vector.Length;
-            Vector inputVector = obj as Vector;
+            if (ReferenceEquals(obj, this))
+            {
+                return true;
+            }
 
-            if (vectorSize != inputVector.vector.Length)
+            if (ReferenceEquals(obj, null) || obj.GetType() != GetType())
             {
                 return false;
             }
 
-            for (int i = 0; i < vectorSize; i++)
-            {
-                if (this.vector[i] == inputVector.vector[i])
-                {
-                    continue;
-                }
+            Vector v = (Vector)obj;
 
+            if (matrix.Length != v.matrix.Length)
+            {
                 return false;
+            }
+
+            for (int i = 0; i < matrix.Length; i++)
+            {
+                if (matrix[i] != v.matrix[i])
+                {
+                    return false;
+                }
             }
 
             return true;
@@ -146,91 +195,34 @@ namespace Vectors
 
         public override int GetHashCode()
         {
-            int prime = 37;
+            int prime = 47;
             int hash = 1;
 
-            hash = prime * hash + GetSize();
-            hash = prime * hash + (int)GetLength().GetHashCode();
+            hash = prime * hash + matrix.GetHashCode();
 
             return hash;
         }
 
-        public static Vector Addition(Vector vector1, Vector vector2)
+        public static Vector Add(Vector vector1, Vector vector2)
         {
-            int vectorSize = Math.Max(vector1.vector.Length, vector2.vector.Length);
-            double[] newVector = new double[vectorSize];
-
-            for (int i = 0; i < vectorSize; i++)
-            {
-                double operand1 = 0;
-                double operand2 = 0;
-
-                if (i < vector1.vector.Length)
-                {
-                    operand1 = vector1.vector[i];
-                }
-
-                if (i < vector2.vector.Length)
-                {
-                    operand2 = vector2.vector[i];
-                }
-
-                newVector[i] = operand1 + operand2;
-            }
-
-            return new Vector(newVector);
+            return vector1.Add(vector2);
         }
 
-        public static Vector Subtraction(Vector vector1, Vector vector2)
+        public static Vector Subtract(Vector vector1, Vector vector2)
         {
-            int vectorSize = Math.Max(vector1.vector.Length, vector2.vector.Length);
-            double[] newVector = new double[vectorSize];
-
-            for (int i = 0; i < vectorSize; i++)
-            {
-                double operand1 = 0;
-                double operand2 = 0;
-
-                if (i < vector1.vector.Length)
-                {
-                    operand1 = vector1.vector[i];
-                }
-
-                if (i < vector2.vector.Length)
-                {
-                    operand2 = vector2.vector[i];
-                }
-
-                newVector[i] = operand1 - operand2;
-            }
-
-            return new Vector(newVector);
+            return vector1.Subtract(vector2);
         }
 
-        public static double ScalarMultiplication(Vector vector1, Vector vector2)
+        public static double Multiply(Vector vector1, Vector vector2)
         {
-            int vectorSize = vector1.vector.Length;
-            double result = 0;
+            double acc = 0;
 
-            for (int i = 0; i < vectorSize; i++)
+            for (int i = 0; i < vector1.matrix.Length; i++)
             {
-                double operand1 = 0;
-                double operand2 = 0;
-
-                if (i < vector1.vector.Length)
-                {
-                    operand1 = vector1.vector[i];
-                }
-
-                if (i < vector2.vector.Length)
-                {
-                    operand2 = vector2.vector[i];
-                }
-
-                result += operand1 * operand2;
+                acc += vector1.matrix[i] * vector2.matrix[i];
             }
 
-            return result;
+            return acc;
         }
     }
 }
