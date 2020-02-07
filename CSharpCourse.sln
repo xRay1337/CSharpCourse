@@ -13,7 +13,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Resource", "Resource", "{15
 		CountriesXML.xml = CountriesXML.xml
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Diapason", "Diapason\Diapason.csproj", "{4A1ED70E-2FB3-48A4-9C18-6AE5C4EED5BA}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Range", "Diapason\Range.csproj", "{4A1ED70E-2FB3-48A4-9C18-6AE5C4EED5BA}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

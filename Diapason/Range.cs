@@ -4,21 +4,14 @@ namespace Diapason
 {
     class Range
     {
-        private double From { get; set; }
-        private double To { get; set; }
+        public double From { get; set; }
+
+        public double To { get; set; }
 
         public Range(double from, double to)
         {
-            if (from < to)
-            {
-                From = from;
-                To = to;
-            }
-            else
-            {
-                From = to;
-                To = from;
-            }
+            From = from;
+            To = to;
         }
 
         public double GetLength()
@@ -28,12 +21,37 @@ namespace Diapason
 
         public bool IsInside(double number)
         {
-            if (number >= From && number <= To)
+            return number >= From && number <= To;
+        }
+
+        public Range Intersection(Range range)
+        {
+            if (To < range.From)
             {
-                return true;
+                return null;
             }
 
-            return false;
+            return new Range(range.From, To);
+        }
+
+        public Range[] Union(Range range)
+        {
+            if (To < range.From)
+            {
+                return new Range[] { this, range };
+            }
+
+            return new Range[] { new Range(From, range.To) };
+        }
+
+        public Range[] Except(Range range)
+        {
+            if (To < range.From)
+            {
+                return new Range[] { this };
+            }
+
+            return new Range[] { new Range(From, range.From), new Range(To, range.To) };
         }
     }
 }

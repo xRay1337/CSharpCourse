@@ -1,39 +1,72 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <countries>
-  <country name="Germany">
+  <country>
     <nameRu>Германия</nameRu>
     <nameEn>Germany</nameEn>
-    <population>83149300</population>
     <countryCode>+49</countryCode>
     <currencyCode>978</currencyCode>
     <cities>
-      <city>Berlin</city>
-      <city>Hamburg</city>
-      <city>Munich</city>
+      <city>
+        <nameRu>Берлин</nameRu>
+        <nameEn>Berlin</nameEn>
+        <population>3644826</population>
+      </city>
+      <city>
+        <nameRu>Гамбург</nameRu>
+        <nameEn>Hamburg</nameEn>
+        <population>1841179</population>
+      </city>
+      <city>
+        <nameRu>Мюнхен</nameRu>
+        <nameEn>Munich</nameEn>
+        <population>1456039</population>
+      </city>
     </cities>
   </country>
-  <country name="Russia">
+  <country>
     <nameRu>Россия</nameRu>
     <nameEn>Russia</nameEn>
-    <population>146780720</population>
     <countryCode>+7</countryCode>
     <currencyCode>810</currencyCode>
     <cities>
-      <city>Moscow</city>
-      <city>St. Petersburg</city>
-      <city>Novosibirsk</city>
+      <city>
+        <nameRu>Москва</nameRu>
+        <nameEn>Moscow</nameEn>
+        <population>12692466</population>
+      </city>
+      <city>
+        <nameRu>Санкт-Петербург</nameRu>
+        <nameEn>St. Petersburg</nameEn>
+        <population>5392992</population>
+      </city>
+      <city>
+        <nameRu>Новосибирск</nameRu>
+        <nameEn>Novosibirsk</nameEn>
+        <population>1618039</population>
+      </city>
     </cities>
   </country>
-  <country name="USA">
+  <country>
     <nameRu>США</nameRu>
     <nameEn>USA</nameEn>
-    <population>329275158</population>
     <countryCode>+1</countryCode>
     <currencyCode>840</currencyCode>
     <cities>
-      <city>New York City</city>
-      <city>Los Angeles</city>
-      <city>Chicago</city>
+      <city>
+        <nameRu>Нью-Йорк</nameRu>
+        <nameEn>New York City</nameEn>
+        <population>8405837</population>
+      </city>
+      <city>
+        <nameRu>Лос-Анджелес</nameRu>
+        <nameEn>Los Angeles</nameEn>
+        <population>3990456</population>
+      </city>
+      <city>
+        <nameRu>Чикаго</nameRu>
+        <nameEn>Chicago</nameEn>
+        <population>2716000</population>
+      </city>
     </cities>
   </country>
 </countries>
