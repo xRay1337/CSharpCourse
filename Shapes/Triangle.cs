@@ -4,73 +4,81 @@ namespace Shapes
 {
     class Triangle : IShape
     {
-        private double x1 { get; set; }
-        private double y1 { get; set; }
-        private double x2 { get; set; }
-        private double y2 { get; set; }
-        private double x3 { get; set; }
-        private double y3 { get; set; }
+        public double X1 { get; set; }
+
+        public double Y1 { get; set; }
+
+        public double X2 { get; set; }
+
+        public double Y2 { get; set; }
+
+        public double X3 { get; set; }
+
+        public double Y3 { get; set; }
 
         public Triangle(double x1, double y1, double x2, double y2, double x3, double y3)
         {
-            this.x1 = x1;
-            this.y1 = y1;
-            this.x2 = x2;
-            this.y2 = y2;
-            this.x3 = x3;
-            this.y3 = y3;
+            X1 = x1;
+            Y1 = y1;
+            X2 = x2;
+            Y2 = y2;
+            X3 = x3;
+            Y3 = y3;
+        }
+
+        private double GetSideLegth(double x1, double y1, double x2, double y2)
+        {
+            return Math.Sqrt(Math.Pow(x1 - x2, 2) + Math.Pow(y1 - y2, 2));
         }
 
         public double GetArea()
         {
             double epsilon = 1.0e-10;
 
-            if (Math.Abs((x3 - x1) * (y2 - y1) - (y3 - y1) * (x2 - x1)) < epsilon)
+            if (Math.Abs((X3 - X1) * (Y2 - Y1) - (Y3 - Y1) * (X2 - X1)) < epsilon)
             {
                 return 0;
             }
-            else
-            {
-                double sideAB = Math.Sqrt(Math.Pow(x1 - x2, 2) + Math.Pow(y1 - y2, 2));
-                double sideBC = Math.Sqrt(Math.Pow(x2 - x3, 2) + Math.Pow(y2 - y3, 2));
-                double sideCA = Math.Sqrt(Math.Pow(x3 - x1, 2) + Math.Pow(y3 - y1, 2));
 
-                double halfPerimeter = (sideAB + sideBC + sideCA) / 2;
-                double triangleArea = Math.Sqrt(halfPerimeter * (halfPerimeter - sideAB) * (halfPerimeter - sideBC) * (halfPerimeter - sideCA));
+            double side1 = GetSideLegth(X1, Y1, X2, Y2);
+            double side2 = GetSideLegth(X2, Y2, X3, Y3);
+            double side3 = GetSideLegth(X3, Y3, X1, Y1);
 
-                return triangleArea;
-            }
+            double halfPerimeter = (side1 + side2 + side3) / 2;
+            double triangleArea = Math.Sqrt(halfPerimeter * (halfPerimeter - side1) * (halfPerimeter - side2) * (halfPerimeter - side3));
+
+            return triangleArea;
         }
 
         public double GetPerimeter()
         {
-            double sideAB = Math.Sqrt(Math.Pow(x1 - x2, 2) + Math.Pow(y1 - y2, 2));
-            double sideBC = Math.Sqrt(Math.Pow(x2 - x3, 2) + Math.Pow(y2 - y3, 2));
-            double sideCA = Math.Sqrt(Math.Pow(x3 - x1, 2) + Math.Pow(y3 - y1, 2));
+            double side1 = GetSideLegth(X1, Y1, X2, Y2);
+            double side2 = GetSideLegth(X2, Y2, X3, Y3);
+            double side3 = GetSideLegth(X3, Y3, X1, Y1);
 
-            return sideAB + sideBC + sideCA;
+            return side1 + side2 + side3;
         }
 
         public double GetHeight()
         {
-            return Math.Max(Math.Max(y1, y2), y3) - Math.Min(Math.Min(y1, y2), y3);
+            return Math.Max(Math.Max(Y1, Y2), Y3) - Math.Min(Math.Min(Y1, Y2), Y3);
         }
 
         public double GetWidth()
         {
-            return Math.Max(Math.Max(x1, x2), x3) - Math.Min(Math.Min(x1, x2), x3);
+            return Math.Max(Math.Max(X1, X2), X3) - Math.Min(Math.Min(X1, X2), X3);
         }
 
-        public int CompareTo(Object obj)
+        public int CompareTo(object obj)
         {
             IShape shape = obj as IShape;
 
-            if (this.GetArea() > shape.GetArea())
+            if (GetArea() > shape.GetArea())
             {
                 return 1;
             }
 
-            if (this.GetArea() < shape.GetArea())
+            if (GetArea() < shape.GetArea())
             {
                 return -1;
             }
@@ -80,40 +88,39 @@ namespace Shapes
 
         public override string ToString()
         {
-            return string.Format("{0}. Area {1:f2}", this.GetType(), this.GetArea());
+            return string.Format("{0}. X1 = {1:f2}, Y1 = {2:f2}, X1 = {3:f2}, Y1 = {4:f2}, X1 = {5:f2}, Y1 = {6:f2}. Area = {7:f2}. Perimeter = {8:f2}.", GetType(), X1, Y1, X2, Y2, X3, Y3, GetArea(), GetPerimeter());
         }
 
         public override int GetHashCode()
         {
-            int prime = 37;
+            int prime = 47;
             int hash = 1;
 
-            hash = prime * hash + (int)x1;
-            hash = prime * hash + (int)x2;
-            hash = prime * hash + (int)x3;
-            hash = prime * hash + (int)y1;
-            hash = prime * hash + (int)y2;
-            hash = prime * hash + (int)y3;
-
-            hash = prime * hash + GetArea().GetHashCode();
+            hash = prime * hash + X1.GetHashCode();
+            hash = prime * hash + Y1.GetHashCode();
+            hash = prime * hash + X2.GetHashCode();
+            hash = prime * hash + Y2.GetHashCode();
+            hash = prime * hash + X3.GetHashCode();
+            hash = prime * hash + Y3.GetHashCode();
 
             return hash;
         }
 
         public override bool Equals(object obj)
         {
-            if (this.GetType() == obj.GetType())
+            if (ReferenceEquals(obj, this))
             {
-                IShape shape = obj as IShape;
-
-                if (this.GetArea() == shape.GetArea())
-                {
-                    return true;
-                }
+                return true;
             }
 
+            if (ReferenceEquals(obj, null) || obj.GetType() != GetType())
+            {
+                return false;
+            }
 
-            return false;
+            Triangle triangle = (Triangle)obj;
+
+            return X1 == triangle.X1 && Y1 == triangle.Y1 && X2 == triangle.X2 && Y2 == triangle.Y2 && X3 == triangle.X3 && Y3 == triangle.Y3;
         }
     }
 }

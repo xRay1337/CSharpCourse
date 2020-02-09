@@ -4,19 +4,20 @@ namespace Shapes
 {
     class Rectangle : IShape
     {
-        private double Height { get; set; }
-        private double Width { get; set; }
+        public double Height { get; set; }
+        public double Width { get; set; }
 
-        public Rectangle(double Height, double Width)
+        public Rectangle(double height, double width)
         {
-            this.Height = Height;
-            this.Width = Width;
+            Height = height;
+            Width = width;
         }
 
         public double GetArea()
         {
             return Height * Width;
         }
+
         public double GetPerimeter()
         {
             return (Height + Width) * 2;
@@ -32,31 +33,16 @@ namespace Shapes
             return Width;
         }
 
-        public int CompareTo(IShape shape)
-        {
-            if (this.GetArea() > shape.GetArea())
-            {
-                return 1;
-            }
-
-            if (this.GetArea() < shape.GetArea())
-            {
-                return -1;
-            }
-
-            return 0;
-        }
-
-        public int CompareTo(Object obj)
+        public int CompareTo(object obj)
         {
             IShape shape = obj as IShape;
 
-            if (this.GetArea() > shape.GetArea())
+            if (GetArea() > shape.GetArea())
             {
                 return 1;
             }
 
-            if (this.GetArea() < shape.GetArea())
+            if (GetArea() < shape.GetArea())
             {
                 return -1;
             }
@@ -66,36 +52,36 @@ namespace Shapes
 
         public override string ToString()
         {
-            return string.Format("{0}. Area {1:f2}", this.GetType(), this.GetArea());
+            return string.Format("{0}. Height = {1:f2}. Width = {2:f2}. Area = {3:f2}. Perimeter = {4:f2}.", GetType(), Height, Width, GetArea(), GetPerimeter());
         }
 
         public override int GetHashCode()
         {
-            int prime = 37;
+            int prime = 47;
             int hash = 1;
 
-            hash = prime * hash + (int)Height;
+            hash = prime * hash + Height.GetHashCode();
 
-            hash = prime * hash + (int)Width;
-
-            hash = prime * hash + GetArea().GetHashCode();
+            hash = prime * hash + Width.GetHashCode();
 
             return hash;
         }
 
         public override bool Equals(object obj)
         {
-            if (this.GetType() == obj.GetType())
+            if (ReferenceEquals(obj, this))
             {
-                IShape shape = obj as IShape;
-
-                if (this.GetArea() == shape.GetArea())
-                {
-                    return true;
-                }
+                return true;
             }
 
-            return false;
+            if (ReferenceEquals(obj, null) || obj.GetType() != GetType())
+            {
+                return false;
+            }
+
+            Rectangle rectangle = (Rectangle)obj;
+
+            return Height == rectangle.Height && Width == rectangle.Width;
         }
     }
 }

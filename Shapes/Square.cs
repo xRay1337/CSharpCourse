@@ -4,11 +4,11 @@ namespace Shapes
 {
     class Square : IShape
     {
-        private double SideLength { get; set; }
+        public double SideLength { get; set; }
 
         public Square(double sideLength)
         {
-            this.SideLength = sideLength;
+            SideLength = sideLength;
         }
 
         public double GetArea()
@@ -31,16 +31,16 @@ namespace Shapes
             return SideLength;
         }
 
-        public int CompareTo(Object obj)
+        public int CompareTo(object obj)
         {
             IShape shape = obj as IShape;
 
-            if (this.GetArea() > shape.GetArea())
+            if (GetArea() > shape.GetArea())
             {
                 return 1;
             }
 
-            if (this.GetArea() < shape.GetArea())
+            if (GetArea() < shape.GetArea())
             {
                 return -1;
             }
@@ -50,34 +50,34 @@ namespace Shapes
 
         public override string ToString()
         {
-            return string.Format("{0}. Area {1:f2}", this.GetType(), this.GetArea());
+            return string.Format("{0}. Side Length = {1:f2}. Area = {2:f2}. Perimeter = {3:f2}.", GetType(), SideLength, GetArea(), GetPerimeter());
         }
 
         public override int GetHashCode()
         {
-            int prime = 37;
+            int prime = 47;
             int hash = 1;
 
-            hash = prime * hash + (int)SideLength;
-
-            hash = prime * hash + GetArea().GetHashCode();
+            hash = prime * hash + SideLength.GetHashCode();
 
             return hash;
         }
 
         public override bool Equals(object obj)
         {
-            if (this.GetType() == obj.GetType())
+            if (ReferenceEquals(obj, this))
             {
-                IShape shape = obj as IShape;
-
-                if (this.GetArea() == shape.GetArea())
-                {
-                    return true;
-                }
+                return true;
             }
-            
-            return false;
+
+            if (ReferenceEquals(obj, null) || obj.GetType() != GetType())
+            {
+                return false;
+            }
+
+            Square square = (Square)obj;
+
+            return SideLength == square.SideLength;
         }
     }
 }

@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Vectors", "Vectors\Vectors.
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Resource", "Resource", "{15261875-877D-4B07-8E4D-66C38E8DD03A}"
 	ProjectSection(SolutionItems) = preProject
+		Countries.json = Countries.json
+		CountriesExample.json = CountriesExample.json
 		CountriesJSON.json = CountriesJSON.json
 		CountriesXML.xml = CountriesXML.xml
 	EndProjectSection

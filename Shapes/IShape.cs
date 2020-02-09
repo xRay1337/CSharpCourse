@@ -2,11 +2,14 @@
 
 namespace Shapes
 {
-    interface IShape : IComparable
+    interface IShape
     {
         double GetWidth();
+
         double GetHeight();
+
         double GetArea();
+
         double GetPerimeter();
     }
 }

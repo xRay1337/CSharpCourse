@@ -29,10 +29,22 @@ namespace Shapes
             shapes[6] = circle1;
             shapes[7] = circle2;
 
-            Array.Sort(shapes);
+            CompareByArea compareByArea = new CompareByArea();
 
-            Console.WriteLine("Первая фигура по площади: {0}", shapes[shapes.Length - 1].ToString());
-            Console.WriteLine("Вторая фигура по площади: {0}", shapes[shapes.Length - 2].ToString());
+            Array.Sort(shapes, compareByArea.CompareTo);
+
+            Console.WriteLine("Первая фигура по площади: {0}", shapes[0]);
+
+            Console.WriteLine();
+
+            CompareByPerimeter compareByPerimeter = new CompareByPerimeter();
+
+            Array.Sort(shapes, compareByPerimeter.CompareTo);
+
+            Console.WriteLine("Вторая фигура по периметру: {0}", shapes[1]);
+
+            Console.WriteLine();
+
             Console.WriteLine(shapes[4].GetHashCode());
 
             Console.ReadKey();
