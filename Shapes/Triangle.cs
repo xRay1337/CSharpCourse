@@ -26,7 +26,7 @@ namespace Shapes
             Y3 = y3;
         }
 
-        private double GetSideLegth(double x1, double y1, double x2, double y2)
+        private static double GetSideLength(double x1, double y1, double x2, double y2)
         {
             return Math.Sqrt(Math.Pow(x1 - x2, 2) + Math.Pow(y1 - y2, 2));
         }
@@ -40,9 +40,9 @@ namespace Shapes
                 return 0;
             }
 
-            double side1 = GetSideLegth(X1, Y1, X2, Y2);
-            double side2 = GetSideLegth(X2, Y2, X3, Y3);
-            double side3 = GetSideLegth(X3, Y3, X1, Y1);
+            double side1 = GetSideLength(X1, Y1, X2, Y2);
+            double side2 = GetSideLength(X2, Y2, X3, Y3);
+            double side3 = GetSideLength(X3, Y3, X1, Y1);
 
             double halfPerimeter = (side1 + side2 + side3) / 2;
             double triangleArea = Math.Sqrt(halfPerimeter * (halfPerimeter - side1) * (halfPerimeter - side2) * (halfPerimeter - side3));
@@ -52,9 +52,9 @@ namespace Shapes
 
         public double GetPerimeter()
         {
-            double side1 = GetSideLegth(X1, Y1, X2, Y2);
-            double side2 = GetSideLegth(X2, Y2, X3, Y3);
-            double side3 = GetSideLegth(X3, Y3, X1, Y1);
+            double side1 = GetSideLength(X1, Y1, X2, Y2);
+            double side2 = GetSideLength(X2, Y2, X3, Y3);
+            double side3 = GetSideLength(X3, Y3, X1, Y1);
 
             return side1 + side2 + side3;
         }
@@ -67,23 +67,6 @@ namespace Shapes
         public double GetWidth()
         {
             return Math.Max(Math.Max(X1, X2), X3) - Math.Min(Math.Min(X1, X2), X3);
-        }
-
-        public int CompareTo(object obj)
-        {
-            IShape shape = obj as IShape;
-
-            if (GetArea() > shape.GetArea())
-            {
-                return 1;
-            }
-
-            if (GetArea() < shape.GetArea())
-            {
-                return -1;
-            }
-
-            return 0;
         }
 
         public override string ToString()

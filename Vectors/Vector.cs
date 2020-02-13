@@ -5,68 +5,70 @@ namespace Vectors
 {
     class Vector
     {
-        private double[] matrix;
+        private double[] vectorCoordinates;
 
         public Vector(int size)
         {
-            if (size > 0)
+            if (size <= 0)
             {
-                matrix = new double[size];
+                throw new ArgumentException("Need a positive number.", "size");
             }
-            else
-            {
-                throw new Exception("Need a positive number.");
-            }
+
+            vectorCoordinates = new double[size];
         }
 
         public Vector(Vector vector)
         {
-            matrix = new double[vector.matrix.Length];
-            Array.Copy(vector.matrix, 0, matrix, 0, vector.matrix.Length);
+            vectorCoordinates = new double[vector.vectorCoordinates.Length];
+            Array.Copy(vector.vectorCoordinates, 0, vectorCoordinates, 0, vector.vectorCoordinates.Length);
         }
 
         public Vector(double[] array)
         {
-            if (array.Length > 0)
+            if (array.Length <= 0)
             {
-                int arrayLength = array.Length;
-                matrix = new double[arrayLength];
-                Array.Copy(array, 0, matrix, 0, arrayLength);
+                throw new ArgumentException("Need a positive array size.");
             }
-            else
-            {
-                throw new Exception("Need a positive array length.");
-            }
+
+            vectorCoordinates = new double[array.Length];
+            Array.Copy(array, 0, vectorCoordinates, 0, array.Length);
+
         }
 
         public Vector(int size, double[] array)
         {
-            if (size > 0 && size >= array.Length)
+            if (size <= 0 && array.Length == 0)
             {
-                matrix = new double[size];
-                array.CopyTo(matrix, 0);
+                throw new ArgumentException("Need a positive size or array length.");
             }
-            else
-            {
-                throw new Exception("Need a positive size or array length.");
-            }
+
+            vectorCoordinates = new double[size];
+            array.CopyTo(vectorCoordinates, 0);
         }
 
         public int GetSize()
         {
-            return matrix.Length;
+            return vectorCoordinates.Length;
         }
 
         public override string ToString()
         {
             StringBuilder stringBuilder = new StringBuilder();
-            stringBuilder.Append("{ ").Append(string.Join(", ", matrix)).Append(" }");
+
+            stringBuilder.Append("{ ").Append(string.Join(", ", vectorCoordinates)).Append(" }");
+
             return stringBuilder.ToString();
         }
 
         public Vector Add(Vector vector)
         {
-            int maxLength = Math.Max(matrix.Length, vector.matrix.Length);
+            int maxLength = Math.Max(vectorCoordinates.Length, vector.vectorCoordinates.Length);
+
+            //if(vectorCoordinates.Length >= vector.vectorCoordinates.Length)
+            //{
+
+            //}
+
 
             double[] tempMatrix = new double[maxLength];
 
@@ -75,27 +77,27 @@ namespace Vectors
                 double operand1 = 0;
                 double operand2 = 0;
 
-                if (i < matrix.Length)
+                if (i < vectorCoordinates.Length)
                 {
-                    operand1 = matrix[i];
+                    operand1 = vectorCoordinates[i];
                 }
 
-                if (i < vector.matrix.Length)
+                if (i < vector.vectorCoordinates.Length)
                 {
-                    operand2 = vector.matrix[i];
+                    operand2 = vector.vectorCoordinates[i];
                 }
 
                 tempMatrix[i] = operand1 + operand2;
             }
 
-            matrix = tempMatrix;
+            vectorCoordinates = tempMatrix;
 
             return this;
         }
 
         public Vector Subtract(Vector vector)
         {
-            int maxLength = Math.Max(matrix.Length, vector.matrix.Length);
+            int maxLength = Math.Max(vectorCoordinates.Length, vector.vectorCoordinates.Length);
 
             double[] tempMatrix = new double[maxLength];
 
@@ -104,29 +106,29 @@ namespace Vectors
                 double operand1 = 0;
                 double operand2 = 0;
 
-                if (i < matrix.Length)
+                if (i < vectorCoordinates.Length)
                 {
-                    operand1 = matrix[i];
+                    operand1 = vectorCoordinates[i];
                 }
 
-                if (i < vector.matrix.Length)
+                if (i < vector.vectorCoordinates.Length)
                 {
-                    operand2 = vector.matrix[i];
+                    operand2 = vector.vectorCoordinates[i];
                 }
 
                 tempMatrix[i] = operand1 - operand2;
             }
 
-            matrix = tempMatrix;
+            vectorCoordinates = tempMatrix;
 
             return this;
         }
 
         public Vector Multiply(int scalar)
         {
-            for (int i = 0; i < matrix.Length; i++)
+            for (int i = 0; i < vectorCoordinates.Length; i++)
             {
-                matrix[i] *= scalar;
+                vectorCoordinates[i] *= scalar;
             }
 
             return this;
@@ -134,16 +136,14 @@ namespace Vectors
 
         public Vector Reverse()
         {
-            Multiply(-1);
-
-            return this;
+            return Multiply(-1);
         }
 
         public double GetLength()
         {
             double squareSum = 0;
 
-            foreach (var e in matrix)
+            foreach (var e in vectorCoordinates)
             {
                 squareSum += Math.Pow(e, 2);
             }
@@ -153,12 +153,12 @@ namespace Vectors
 
         public double GetElement(int index)
         {
-            return matrix[index];
+            return vectorCoordinates[index];
         }
 
         public Vector SetElement(int index, double element)
         {
-            matrix[index] = element;
+            vectorCoordinates[index] = element;
 
             return this;
         }
@@ -177,14 +177,14 @@ namespace Vectors
 
             Vector v = (Vector)obj;
 
-            if (matrix.Length != v.matrix.Length)
+            if (vectorCoordinates.Length != v.vectorCoordinates.Length)
             {
                 return false;
             }
 
-            for (int i = 0; i < matrix.Length; i++)
+            for (int i = 0; i < vectorCoordinates.Length; i++)
             {
-                if (matrix[i] != v.matrix[i])
+                if (vectorCoordinates[i] != v.vectorCoordinates[i])
                 {
                     return false;
                 }
@@ -198,31 +198,38 @@ namespace Vectors
             int prime = 47;
             int hash = 1;
 
-            hash = prime * hash + matrix.GetHashCode();
+            foreach(var e in vectorCoordinates)
+            {
+                hash = prime * hash + e.GetHashCode();
+            }
 
             return hash;
         }
 
         public static Vector Add(Vector vector1, Vector vector2)
         {
-            return vector1.Add(vector2);
+            Vector tempVector = new Vector(vector1);
+
+            return tempVector.Add(vector2);
         }
 
         public static Vector Subtract(Vector vector1, Vector vector2)
         {
-            return vector1.Subtract(vector2);
+            Vector tempVector = new Vector(vector1);
+
+            return tempVector.Subtract(vector2);
         }
 
-        public static double Multiply(Vector vector1, Vector vector2)
+        public static double MultiplyByScalar(Vector vector1, Vector vector2)
         {
-            double acc = 0;
+            double result = 0;
 
-            for (int i = 0; i < vector1.matrix.Length; i++)
+            for (int i = 0; i < vector1.vectorCoordinates.Length && i < vector2.vectorCoordinates.Length; i++)
             {
-                acc += vector1.matrix[i] * vector2.matrix[i];
+                result += vector1.vectorCoordinates[i] * vector2.vectorCoordinates[i];
             }
 
-            return acc;
+            return result;
         }
     }
 }

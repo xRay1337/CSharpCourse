@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace Shapes
+﻿namespace Shapes
 {
     class Square : IShape
     {
@@ -29,23 +27,6 @@ namespace Shapes
         public double GetWidth()
         {
             return SideLength;
-        }
-
-        public int CompareTo(object obj)
-        {
-            IShape shape = obj as IShape;
-
-            if (GetArea() > shape.GetArea())
-            {
-                return 1;
-            }
-
-            if (GetArea() < shape.GetArea())
-            {
-                return -1;
-            }
-
-            return 0;
         }
 
         public override string ToString()

@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace Shapes
+﻿namespace Shapes
 {
     class Rectangle : IShape
     {
@@ -31,23 +29,6 @@ namespace Shapes
         public double GetWidth()
         {
             return Width;
-        }
-
-        public int CompareTo(object obj)
-        {
-            IShape shape = obj as IShape;
-
-            if (GetArea() > shape.GetArea())
-            {
-                return 1;
-            }
-
-            if (GetArea() < shape.GetArea())
-            {
-                return -1;
-            }
-
-            return 0;
         }
 
         public override string ToString()

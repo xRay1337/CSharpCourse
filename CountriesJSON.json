@@ -7,23 +7,19 @@
       "currencyCode": 978,
       "cities": [
         {
-          "city": [
-            {
-              "nameRu": "Берлин",
-              "nameEn": "Berlin",
-              "population": 3644826
-            },
-            {
-              "nameRu": "Гамбург",
-              "nameEn": "Hamburg",
-              "population": 1841179
-            },
-            {
-              "nameRu": "Мюнхен",
-              "nameEn": "Munich",
-              "population": 1456039
-            }
-          ]
+          "nameRu": "Берлин",
+          "nameEn": "Berlin",
+          "population": 3644826
+        },
+        {
+          "nameRu": "Гамбург",
+          "nameEn": "Hamburg",
+          "population": 1841179
+        },
+        {
+          "nameRu": "Мюнхен",
+          "nameEn": "Munich",
+          "population": 1456039
         }
       ]
     },
@@ -34,23 +30,19 @@
       "currencyCode": 810,
       "cities": [
         {
-          "city": [
-            {
-              "nameRu": "Москва",
-              "nameEn": "Moscow",
-              "population": 12692466
-            },
-            {
-              "nameRu": "Санкт-Петербург",
-              "nameEn": "St. Petersburg",
-              "population": 5392992
-            },
-            {
-              "nameRu": "Новосибирск",
-              "nameEn": "Novosibirsk",
-              "population": 1618039
-            }
-          ]
+          "nameRu": "Москва",
+          "nameEn": "Moscow",
+          "population": 12692466
+        },
+        {
+          "nameRu": "Санкт-Петербург",
+          "nameEn": "St. Petersburg",
+          "population": 5392992
+        },
+        {
+          "nameRu": "Новосибирск",
+          "nameEn": "Novosibirsk",
+          "population": 1618039
         }
       ]
     },
@@ -61,23 +53,19 @@
       "currencyCode": 840,
       "cities": [
         {
-          "city": [
-            {
-              "nameRu": "Нью-Йорк",
-              "nameEn": "New York City",
-              "population": 8405837
-            },
-            {
-              "nameRu": "Лос-Анджелес",
-              "nameEn": "Los Angeles",
-              "population": 3990456
-            },
-            {
-              "nameRu": "Чикаго",
-              "nameEn": "Chicago",
-              "population": 2716000
-            }
-          ]
+          "nameRu": "Нью-Йорк",
+          "nameEn": "New York City",
+          "population": 8405837
+        },
+        {
+          "nameRu": "Лос-Анджелес",
+          "nameEn": "Los Angeles",
+          "population": 3990456
+        },
+        {
+          "nameRu": "Чикаго",
+          "nameEn": "Chicago",
+          "population": 2716000
         }
       ]
     }
