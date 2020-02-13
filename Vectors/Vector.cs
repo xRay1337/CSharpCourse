@@ -62,64 +62,30 @@ namespace Vectors
 
         public Vector Add(Vector vector)
         {
-            int maxLength = Math.Max(vectorCoordinates.Length, vector.vectorCoordinates.Length);
-
-            //if(vectorCoordinates.Length >= vector.vectorCoordinates.Length)
-            //{
-
-            //}
-
-
-            double[] tempMatrix = new double[maxLength];
-
-            for (int i = 0; i < maxLength; i++)
+            if (vectorCoordinates.Length < vector.vectorCoordinates.Length)
             {
-                double operand1 = 0;
-                double operand2 = 0;
-
-                if (i < vectorCoordinates.Length)
-                {
-                    operand1 = vectorCoordinates[i];
-                }
-
-                if (i < vector.vectorCoordinates.Length)
-                {
-                    operand2 = vector.vectorCoordinates[i];
-                }
-
-                tempMatrix[i] = operand1 + operand2;
+                Array.Resize(ref vectorCoordinates, vector.vectorCoordinates.Length);
             }
 
-            vectorCoordinates = tempMatrix;
+            for (int i = 0; i < vector.vectorCoordinates.Length; i++)
+            {
+                vectorCoordinates[i] += vector.vectorCoordinates[i];
+            }
 
             return this;
         }
 
         public Vector Subtract(Vector vector)
         {
-            int maxLength = Math.Max(vectorCoordinates.Length, vector.vectorCoordinates.Length);
-
-            double[] tempMatrix = new double[maxLength];
-
-            for (int i = 0; i < maxLength; i++)
+            if (vectorCoordinates.Length < vector.vectorCoordinates.Length)
             {
-                double operand1 = 0;
-                double operand2 = 0;
-
-                if (i < vectorCoordinates.Length)
-                {
-                    operand1 = vectorCoordinates[i];
-                }
-
-                if (i < vector.vectorCoordinates.Length)
-                {
-                    operand2 = vector.vectorCoordinates[i];
-                }
-
-                tempMatrix[i] = operand1 - operand2;
+                Array.Resize(ref vectorCoordinates, vector.vectorCoordinates.Length);
             }
 
-            vectorCoordinates = tempMatrix;
+            for (int i = 0; i < vector.vectorCoordinates.Length; i++)
+            {
+                vectorCoordinates[i] -= vector.vectorCoordinates[i];
+            }
 
             return this;
         }
@@ -198,7 +164,7 @@ namespace Vectors
             int prime = 47;
             int hash = 1;
 
-            foreach(var e in vectorCoordinates)
+            foreach (var e in vectorCoordinates)
             {
                 hash = prime * hash + e.GetHashCode();
             }
