@@ -4,9 +4,9 @@ namespace Shapes
 {
     class AreaComparer : IComparer<IShape>
     {
-        public int Compare(IShape x, IShape y)
+        public int Compare(IShape shape1, IShape shape2)
         {
-            return x.GetArea().CompareTo(y.GetArea());
+            return shape1.GetArea().CompareTo(shape2.GetArea());
         }
     }
 }
