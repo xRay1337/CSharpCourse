@@ -1,4 +1,4 @@
-﻿namespace Shapes
+﻿namespace ShapesShapes
 {
     class Square : IShape
     {

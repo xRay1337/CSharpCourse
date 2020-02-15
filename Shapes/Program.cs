@@ -1,4 +1,6 @@
-﻿using System;
+﻿using ComparersShapes;
+using ShapesShapes;
+using System;
 
 namespace Shapes
 {
@@ -17,13 +19,13 @@ namespace Shapes
                 new Circle(9)
             };
 
-            AreaComparer compareByArea = new AreaComparer();
-            Array.Sort(shapes, compareByArea.Compare);
+            AreaComparer areaComparer = new AreaComparer();
+            Array.Sort(shapes, areaComparer);
             Console.WriteLine("Первая фигура по площади: {0}", shapes[shapes.Length - 1]);
             Console.WriteLine();
 
-            PerimeterComparer compareByPerimeter = new PerimeterComparer();
-            Array.Sort(shapes, compareByPerimeter.Compare);
+            PerimeterComparer perimeterComparer = new PerimeterComparer();
+            Array.Sort(shapes, perimeterComparer);
             Console.WriteLine("Вторая фигура по периметру: {0}", shapes[shapes.Length - 2]);
 
             Console.ReadKey();
