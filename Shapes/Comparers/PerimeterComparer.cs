@@ -1,7 +1,7 @@
-﻿using ShapesShapes;
+﻿using Shapes.Shapes;
 using System.Collections.Generic;
 
-namespace ComparersShapes
+namespace Shapes.Comparers
 {
     class PerimeterComparer : IComparer<IShape>
     {
