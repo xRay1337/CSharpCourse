@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace Diapason
+﻿namespace Range
 {
     class Range
     {
@@ -14,6 +12,10 @@ namespace Diapason
             To = to;
         }
 
+        public Range(Range range) : this(range.From, range.To)
+        {
+        }
+
         public double GetLength()
         {
             return To - From;
@@ -24,7 +26,17 @@ namespace Diapason
             return number >= From && number <= To;
         }
 
-        public Range Intersection(Range range)
+        public Range[] GetUnion(Range range)
+        {
+            if (To < range.From)
+            {
+                return new Range[] { new Range(this), new Range(range) };
+            }
+
+            return new Range[] { new Range(From, range.To) };
+        }
+
+        public Range GetIntersection(Range range)
         {
             if (To < range.From)
             {
@@ -34,24 +46,19 @@ namespace Diapason
             return new Range(range.From, To);
         }
 
-        public Range[] Union(Range range)
+        public Range[] GetExcept(Range range)
         {
-            if (To < range.From)
+            if (To > range.From)
             {
-                return new Range[] { this, range };
+                return new Range[] { new Range(range.From, To) };
             }
 
-            return new Range[] { new Range(From, range.To) };
+            return new Range[] { new Range(this), new Range(range) };
         }
 
-        public Range[] Except(Range range)
+        public override string ToString()
         {
-            if (To < range.From)
-            {
-                return new Range[] { this };
-            }
-
-            return new Range[] { new Range(From, range.From), new Range(To, range.To) };
+            return string.Format("({0:f1}, {1:f1})", From, To);
         }
     }
 }
