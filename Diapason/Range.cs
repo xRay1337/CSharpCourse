@@ -58,7 +58,7 @@
 
         public override string ToString()
         {
-            return string.Format("({0:f1}, {1:f1})", From, To);
+            return string.Format("({0:f1}; {1:f1})", From, To);
         }
     }
 }
