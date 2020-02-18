@@ -5,7 +5,7 @@ namespace Vectors
 {
     class Vector
     {
-        private double[] vectorCoordinates;
+        private double[] coordinates;
 
         public Vector(int size)
         {
@@ -14,62 +14,66 @@ namespace Vectors
                 throw new ArgumentException("Need a positive number.", "size");
             }
 
-            vectorCoordinates = new double[size];
+            coordinates = new double[size];
         }
 
         public Vector(Vector vector)
         {
-            vectorCoordinates = new double[vector.vectorCoordinates.Length];
-            Array.Copy(vector.vectorCoordinates, 0, vectorCoordinates, 0, vector.vectorCoordinates.Length);
+            coordinates = new double[vector.coordinates.Length];
+            Array.Copy(vector.coordinates, 0, coordinates, 0, vector.coordinates.Length);
         }
 
         public Vector(double[] array)
         {
-            if (array.Length <= 0)
+            if (array.Length == 0)
             {
-                throw new ArgumentException("Need a positive array size.");
+                throw new ArgumentException("Need a positive number.", nameof(array));
             }
 
-            vectorCoordinates = new double[array.Length];
-            Array.Copy(array, 0, vectorCoordinates, 0, array.Length);
-
+            coordinates = new double[array.Length];
+            Array.Copy(array, 0, coordinates, 0, array.Length);
         }
 
         public Vector(int size, double[] array)
         {
-            if (size <= 0 && array.Length == 0)
+            if (size <= 0)
             {
-                throw new ArgumentException("Need a positive size or array length.");
+                throw new ArgumentException("Need a positive number.", nameof(size));
             }
 
-            vectorCoordinates = new double[size];
-            array.CopyTo(vectorCoordinates, 0);
+            coordinates = new double[size];
+            int arrayLength = array.Length;
+
+            for (int i = 0; i < size; i++)
+            {
+                coordinates[i] = i < arrayLength ? array[i] : 0;
+            }
         }
 
         public int GetSize()
         {
-            return vectorCoordinates.Length;
+            return coordinates.Length;
         }
 
         public override string ToString()
         {
             StringBuilder stringBuilder = new StringBuilder();
 
-            stringBuilder.Append("{ ").Append(string.Join(", ", vectorCoordinates)).Append(" }");
+            stringBuilder.Append("{ ").Append(string.Join(", ", coordinates)).Append(" }");
 
             return stringBuilder.ToString();
         }
 
         public Vector Add(Vector vector)
         {
-            if (vectorCoordinates.Length < vector.vectorCoordinates.Length)
+            if (coordinates.Length < vector.coordinates.Length)
             {
-                Array.Resize(ref vectorCoordinates, vector.vectorCoordinates.Length);
+                Array.Resize(ref coordinates, vector.coordinates.Length);
             }
 
-            for (int i = 0; i < vector.vectorCoordinates.Length; i++)
+            for (int i = 0; i < vector.coordinates.Length; i++)
             {
-                vectorCoordinates[i] += vector.vectorCoordinates[i];
+                coordinates[i] += vector.coordinates[i];
             }
 
             return this;
@@ -77,14 +81,14 @@ namespace Vectors
 
         public Vector Subtract(Vector vector)
         {
-            if (vectorCoordinates.Length < vector.vectorCoordinates.Length)
+            if (coordinates.Length < vector.coordinates.Length)
             {
-                Array.Resize(ref vectorCoordinates, vector.vectorCoordinates.Length);
+                Array.Resize(ref coordinates, vector.coordinates.Length);
             }
 
-            for (int i = 0; i < vector.vectorCoordinates.Length; i++)
+            for (int i = 0; i < vector.coordinates.Length; i++)
             {
-                vectorCoordinates[i] -= vector.vectorCoordinates[i];
+                coordinates[i] -= vector.coordinates[i];
             }
 
             return this;
@@ -92,9 +96,9 @@ namespace Vectors
 
         public Vector Multiply(int scalar)
         {
-            for (int i = 0; i < vectorCoordinates.Length; i++)
+            for (int i = 0; i < coordinates.Length; i++)
             {
-                vectorCoordinates[i] *= scalar;
+                coordinates[i] *= scalar;
             }
 
             return this;
@@ -109,7 +113,7 @@ namespace Vectors
         {
             double squareSum = 0;
 
-            foreach (var e in vectorCoordinates)
+            foreach (var e in coordinates)
             {
                 squareSum += Math.Pow(e, 2);
             }
@@ -119,12 +123,12 @@ namespace Vectors
 
         public double GetElement(int index)
         {
-            return vectorCoordinates[index];
+            return coordinates[index];
         }
 
         public Vector SetElement(int index, double element)
         {
-            vectorCoordinates[index] = element;
+            coordinates[index] = element;
 
             return this;
         }
@@ -143,14 +147,14 @@ namespace Vectors
 
             Vector v = (Vector)obj;
 
-            if (vectorCoordinates.Length != v.vectorCoordinates.Length)
+            if (coordinates.Length != v.coordinates.Length)
             {
                 return false;
             }
 
-            for (int i = 0; i < vectorCoordinates.Length; i++)
+            for (int i = 0; i < coordinates.Length; i++)
             {
-                if (vectorCoordinates[i] != v.vectorCoordinates[i])
+                if (coordinates[i] != v.coordinates[i])
                 {
                     return false;
                 }
@@ -164,7 +168,7 @@ namespace Vectors
             int prime = 47;
             int hash = 1;
 
-            foreach (var e in vectorCoordinates)
+            foreach (var e in coordinates)
             {
                 hash = prime * hash + e.GetHashCode();
             }
@@ -174,25 +178,23 @@ namespace Vectors
 
         public static Vector Add(Vector vector1, Vector vector2)
         {
-            Vector tempVector = new Vector(vector1);
-
-            return tempVector.Add(vector2);
+            return new Vector(vector1).Add(vector2);
         }
 
         public static Vector Subtract(Vector vector1, Vector vector2)
         {
-            Vector tempVector = new Vector(vector1);
-
-            return tempVector.Subtract(vector2);
+            return new Vector(vector1).Subtract(vector2);
         }
 
-        public static double MultiplyByScalar(Vector vector1, Vector vector2)
+        public static double GetScalarProduct(Vector vector1, Vector vector2)
         {
             double result = 0;
 
-            for (int i = 0; i < vector1.vectorCoordinates.Length && i < vector2.vectorCoordinates.Length; i++)
+            int minSize = vector1.coordinates.Length < vector2.coordinates.Length ? vector1.coordinates.Length : vector2.coordinates.Length;
+
+            for (int i = 0; i < minSize; i++)
             {
-                result += vector1.vectorCoordinates[i] * vector2.vectorCoordinates[i];
+                result += vector1.coordinates[i] * vector2.coordinates[i];
             }
 
             return result;
