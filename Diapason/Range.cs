@@ -28,7 +28,7 @@
 
         public Range[] GetUnion(Range range)
         {
-            if (To < range.From)
+            if (To <= range.From)
             {
                 return new Range[] { new Range(this), new Range(range) };
             }
@@ -38,7 +38,7 @@
 
         public Range GetIntersection(Range range)
         {
-            if (To < range.From)
+            if (To <= range.From)
             {
                 return null;
             }
@@ -48,12 +48,12 @@
 
         public Range[] GetExcept(Range range)
         {
-            if (To > range.From)
+            if (To <= range.From)
             {
-                return new Range[] { new Range(range.From, To) };
+                return new Range[] { new Range(this), new Range(range) };
             }
 
-            return new Range[] { new Range(this), new Range(range) };
+            return new Range[] { new Range(From, range.From - 1) };
         }
 
         public override string ToString()
