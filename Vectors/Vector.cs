@@ -11,7 +11,7 @@ namespace Vectors
         {
             if (size <= 0)
             {
-                throw new ArgumentException("Need a positive number.", $"{nameof(size)} = {size}");
+                throw new ArgumentException($"Size {size} <= 0.", nameof(size));
             }
 
             coordinates = new double[size];
@@ -27,7 +27,7 @@ namespace Vectors
         {
             if (array.Length == 0)
             {
-                throw new ArgumentException("Need a positive array size.", $"{nameof(array)} Length = 0");
+                throw new ArgumentException("Array length must be greater than 0.", nameof(array));
             }
 
             coordinates = new double[array.Length];
@@ -38,12 +38,13 @@ namespace Vectors
         {
             if (size <= 0)
             {
-                throw new ArgumentException("Need a positive number.", nameof(size));
+                throw new ArgumentException($"Size {size} <= 0.", nameof(size));
             }
 
             coordinates = new double[size];
+            int minLength = Math.Min(size, array.Length);
 
-            Array.Copy(array, coordinates, array.Length);
+            Array.Copy(array, coordinates, minLength);
         }
 
         public int GetSize()
