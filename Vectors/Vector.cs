@@ -11,7 +11,7 @@ namespace Vectors
         {
             if (size <= 0)
             {
-                throw new ArgumentException("Need a positive number.", "size");
+                throw new ArgumentException("Need a positive number.", $"{nameof(size)} = {size}");
             }
 
             coordinates = new double[size];
@@ -20,18 +20,18 @@ namespace Vectors
         public Vector(Vector vector)
         {
             coordinates = new double[vector.coordinates.Length];
-            Array.Copy(vector.coordinates, 0, coordinates, 0, vector.coordinates.Length);
+            Array.Copy(vector.coordinates, coordinates, vector.coordinates.Length);
         }
 
         public Vector(double[] array)
         {
             if (array.Length == 0)
             {
-                throw new ArgumentException("Need a positive number.", nameof(array));
+                throw new ArgumentException("Need a positive array size.", $"{nameof(array)} Length = 0");
             }
 
             coordinates = new double[array.Length];
-            Array.Copy(array, 0, coordinates, 0, array.Length);
+            Array.Copy(array, coordinates, array.Length);
         }
 
         public Vector(int size, double[] array)
@@ -42,12 +42,8 @@ namespace Vectors
             }
 
             coordinates = new double[size];
-            int arrayLength = array.Length;
 
-            for (int i = 0; i < size; i++)
-            {
-                coordinates[i] = i < arrayLength ? array[i] : 0;
-            }
+            Array.Copy(array, coordinates, array.Length);
         }
 
         public int GetSize()
@@ -190,7 +186,7 @@ namespace Vectors
         {
             double result = 0;
 
-            int minSize = vector1.coordinates.Length < vector2.coordinates.Length ? vector1.coordinates.Length : vector2.coordinates.Length;
+            int minSize = Math.Min(vector1.coordinates.Length, vector2.coordinates.Length);
 
             for (int i = 0; i < minSize; i++)
             {

@@ -21,7 +21,7 @@ namespace Vectors
             Vector vector3 = new Vector(testArray);
             Console.WriteLine("Конструктор с массивом: " + vector3);
 
-            Vector vector4 = new Vector(2, testArray);
+            Vector vector4 = new Vector(5, testArray);
             Console.WriteLine("Конструктор с массивом и размером 5: " + vector4);
 
             Console.WriteLine();
