@@ -8,11 +8,28 @@ namespace ArrList
     {
         private T[] items = new T[10];
 
-        private int length;
+        private int count;
 
         public int Count
         {
-            get { return length; }
+            get { return count; }
+        }
+
+        public int Capacity
+        {
+            get
+            {
+                return items.Length;
+            }
+            set
+            {
+                if (value > count)
+                {
+                    T[] old = items;
+                    items = new T[value];
+                    Array.Copy(old, items, old.Length);
+                }
+            }
         }
 
         private bool readOnly = false;
@@ -28,6 +45,15 @@ namespace ArrList
             set { items[index] = value; }
         }
 
+        public ArrList()
+        {
+        }
+
+        public ArrList(int capcity)
+        {
+            items = new T[capcity];
+        }
+
         public void Add(T item)
         {
             if (IsReadOnly)
@@ -35,13 +61,13 @@ namespace ArrList
                 throw new InvalidOperationException("This array is read only");
             }
 
-            if (length >= items.Length)
+            if (count >= items.Length)
             {
                 IncreaseCapacity();
             }
 
-            items[length] = item;
-            length++;
+            items[count] = item;
+            count++;
         }
 
         private void IncreaseCapacity()
@@ -115,14 +141,14 @@ namespace ArrList
                 throw new InvalidOperationException("This array is read only");
             }
 
-            if (length + 1 > items.Length)
+            if (count + 1 > items.Length)
             {
                 IncreaseCapacity();
             }
 
-            length++;
+            count++;
 
-            for (int i = length; i > index; i--)
+            for (int i = count; i > index; i--)
             {
                 items[i] = items[i - 1];
             }
@@ -139,7 +165,7 @@ namespace ArrList
 
             bool flag = false;
 
-            for (int i = 0; i < length; i++)
+            for (int i = 0; i < count; i++)
             {
                 if (items[i].Equals(item))
                 {
@@ -158,22 +184,29 @@ namespace ArrList
                 throw new InvalidOperationException("This array is read only");
             }
 
-            if (index < 0 || index >= length)
+            if (index < 0 || index >= count)
             {
                 throw new IndexOutOfRangeException();
             }
 
-            for (int i = index; i < length - 1; i++)
+            for (int i = index; i < count - 1; i++)
             {
                 items[i] = items[i + 1];
             }
 
-            length--;
+            count--;
         }
 
         IEnumerator IEnumerable.GetEnumerator()
         {
             return items.GetEnumerator();
+        }
+
+        public void TrimExcess()
+        {
+            T[] old = items;
+            items = new T[count];
+            Array.Copy(old, items, count);
         }
 
         public override string ToString()
