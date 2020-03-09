@@ -10,10 +10,18 @@ namespace ArrayListHome
         {
             Console.WriteLine("Чтение из файла:");
 
-            List<string> textFromFile = ReadFile("..\\..\\text.txt");
-
-            foreach (var e in textFromFile)
+            try
             {
+                List<string> textFromFile = ReadFile("..\\..\\text.txt");
+
+                foreach (var e in textFromFile)
+                {
+                    Console.WriteLine(e);
+                }
+            }
+            catch (FileNotFoundException e)
+            {
+                Console.WriteLine("Файл не найден.");
                 Console.WriteLine(e);
             }
 
@@ -27,6 +35,7 @@ namespace ArrayListHome
                 if (numbers[i] % 2 == 0)
                 {
                     numbers.RemoveAt(i);
+                    i--;
                 }
             }
 
@@ -50,7 +59,7 @@ namespace ArrayListHome
 
         private static List<int> RemoveDuplicates(List<int> numbers)
         {
-            List<int> result = new List<int>();
+            List<int> result = new List<int>(numbers.Capacity);
 
             foreach (var e in numbers)
             {
@@ -63,7 +72,7 @@ namespace ArrayListHome
             return result;
         }
 
-        static List<string> ReadFile(string path)
+        private static List<string> ReadFile(string path)
         {
             List<string> result = new List<string>();
 
