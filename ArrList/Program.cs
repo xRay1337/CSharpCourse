@@ -1,13 +1,12 @@
 ﻿using System;
-using System.Collections.Generic;
 
-namespace ArrList
+namespace ArrayList
 {
     class Program
     {
         static void Main(string[] args)
         {
-            ArrList<int> arrList1 = new ArrList<int>();
+            ArrayList<int> arrList1 = new ArrayList<int>();
 
             int[] array = new int[30];
 
@@ -46,8 +45,8 @@ namespace ArrList
             Console.WriteLine(arrList1);
             Console.WriteLine();
 
-            ArrList<int> arrList2 = new ArrList<int>() { 1, 2, 3 };
-            ArrList<int> arrList3 = new ArrList<int>() { 1, 2, 3 };
+            ArrayList<int> arrList2 = new ArrayList<int>() { 1, 2, 3 };
+            ArrayList<int> arrList3 = new ArrayList<int>() { 1, 2, 3 };
 
             Console.WriteLine("arrList2 эквивалентен arrList1? {0}", arrList2.Equals(arrList1));
             Console.WriteLine("arrList2 эквивалентен arrList3? {0}", arrList2.Equals(arrList3));

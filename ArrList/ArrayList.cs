@@ -2,18 +2,13 @@
 using System.Collections;
 using System.Collections.Generic;
 
-namespace ArrList
+namespace ArrayList
 {
-    class ArrList<T> : IList<T>
+    class ArrayList<T> : IList<T>
     {
-        private T[] items = new T[10];
+        private T[] items;
 
-        private int count;
-
-        public int Count
-        {
-            get { return count; }
-        }
+        public int Count { get; private set; }
 
         public int Capacity
         {
@@ -23,7 +18,12 @@ namespace ArrList
             }
             set
             {
-                if (value > count)
+                if (value < Count)
+                {
+                    throw new ArgumentOutOfRangeException("Value less than list size.", nameof(value));
+                }
+
+                if (value > Count)
                 {
                     T[] old = items;
                     items = new T[value];
@@ -32,42 +32,52 @@ namespace ArrList
             }
         }
 
-        private bool readOnly = false;
-
         public bool IsReadOnly
         {
-            get { return readOnly; }
+            get { return false; }
         }
 
         public T this[int index]
         {
-            get { return items[index]; }
-            set { items[index] = value; }
+            get
+            {
+                if (index < 0 || index >= Count)
+                {
+                    throw new IndexOutOfRangeException("Invalid value.");
+                }
+
+                return items[index];
+            }
+            set
+            {
+                items[index] = value;
+            }
         }
 
-        public ArrList()
+        public ArrayList()
         {
+            items = new T[10];
         }
 
-        public ArrList(int capcity)
+        public ArrayList(int capacity)
         {
-            items = new T[capcity];
+            if (capacity < 0)
+            {
+                throw new ArgumentException("Need positive capacity.", nameof(capacity));
+            }
+
+            items = new T[capacity];
         }
 
         public void Add(T item)
         {
-            if (IsReadOnly)
-            {
-                throw new InvalidOperationException("This array is read only");
-            }
-
-            if (count >= items.Length)
+            if (Count >= items.Length)
             {
                 IncreaseCapacity();
             }
 
-            items[count] = item;
-            count++;
+            items[Count] = item;
+            Count++;
         }
 
         private void IncreaseCapacity()
@@ -79,11 +89,6 @@ namespace ArrList
 
         public void Clear()
         {
-            if (IsReadOnly)
-            {
-                throw new InvalidOperationException("This array is read only");
-            }
-
             items = new T[items.Length];
         }
 
@@ -100,25 +105,49 @@ namespace ArrList
             return false;
         }
 
-        public void CopyTo(T[] array, int arrayIndex)
+        public void CopyTo(T[] array, int index)
         {
-            if (arrayIndex < 0 || arrayIndex >= array.Length)
+            if (array == null)
             {
-                throw new IndexOutOfRangeException();
+                throw new ArgumentNullException("Array should not be NULL.");
             }
 
-            for (int i = 0, j = arrayIndex; i < Count; i++, j++)
+            if (index < array.Length - 1)
             {
-                array[j] = items[i];
+                throw new ArgumentOutOfRangeException("Index is less than the bottom of the array.");
             }
+
+            if (array.Rank != 1)
+            {
+                throw new ArgumentException("The destination array is multidimensional.");
+            }
+
+            if (Count > array.Length - index)
+            {
+                throw new ArgumentException("The number of elements in the source array is greater than the available number of elements from the index to the end of the destination array.");
+            }
+
+            Array.Copy(items, 0, array, index, Count);
         }
 
         public IEnumerator<T> GetEnumerator()
         {
+            int startCount = Count;
+
             for (int i = 0; i < Count; i++)
             {
+                if (startCount != Count)
+                {
+                    throw new InvalidOperationException("The initial size of the list has changed.");
+                }
+
                 yield return items[i];
             }
+        }
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return GetEnumerator();
         }
 
         public int IndexOf(T item)
@@ -136,19 +165,14 @@ namespace ArrList
 
         public void Insert(int index, T item)
         {
-            if (IsReadOnly)
-            {
-                throw new InvalidOperationException("This array is read only");
-            }
-
-            if (count + 1 > items.Length)
+            if (Count + 1 > items.Length)
             {
                 IncreaseCapacity();
             }
 
-            count++;
+            Count++;
 
-            for (int i = count; i > index; i--)
+            for (int i = Count; i > index; i--)
             {
                 items[i] = items[i - 1];
             }
@@ -158,55 +182,38 @@ namespace ArrList
 
         public bool Remove(T item)
         {
-            if (IsReadOnly)
-            {
-                throw new InvalidOperationException("This array is read only");
-            }
-
-            bool flag = false;
-
-            for (int i = 0; i < count; i++)
+            for (int i = 0; i < Count; i++)
             {
                 if (items[i].Equals(item))
                 {
                     RemoveAt(i);
-                    flag = true;
+                    return true;
                 }
             }
 
-            return flag;
+            return false;
         }
 
         public void RemoveAt(int index)
         {
-            if (IsReadOnly)
+            if (index < 0 || index >= Count)
             {
-                throw new InvalidOperationException("This array is read only");
+                throw new IndexOutOfRangeException("Invalid value.");
             }
 
-            if (index < 0 || index >= count)
-            {
-                throw new IndexOutOfRangeException();
-            }
-
-            for (int i = index; i < count - 1; i++)
+            for (int i = index; i < Count - 1; i++)
             {
                 items[i] = items[i + 1];
             }
 
-            count--;
-        }
-
-        IEnumerator IEnumerable.GetEnumerator()
-        {
-            return items.GetEnumerator();
+            Count--;
         }
 
         public void TrimExcess()
         {
             T[] old = items;
-            items = new T[count];
-            Array.Copy(old, items, count);
+            items = new T[Count];
+            Array.Copy(old, items, Count);
         }
 
         public override string ToString()
@@ -226,14 +233,14 @@ namespace ArrList
                 return false;
             }
 
-            ArrList<T> o = (ArrList<T>)obj;
+            ArrayList<T> o = (ArrayList<T>)obj;
 
-            if (items.Length != o.items.Length)
+            if (Count != o.Count)
             {
                 return false;
             }
 
-            for (int i = 0; i < items.Length; i++)
+            for (int i = 0; i < Count; i++)
             {
                 if (!items[i].Equals(o.items[i]))
                 {
