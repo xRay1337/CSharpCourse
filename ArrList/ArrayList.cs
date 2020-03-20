@@ -10,6 +10,8 @@ namespace ArrayList
 
         public int Count { get; private set; }
 
+        private int ModCount { get; set; }
+
         public int Capacity
         {
             get
@@ -78,6 +80,7 @@ namespace ArrayList
 
             items[Count] = item;
             Count++;
+            ModCount++;
         }
 
         private void IncreaseCapacity()
@@ -90,6 +93,7 @@ namespace ArrayList
         public void Clear()
         {
             items = new T[items.Length];
+            ModCount++;
         }
 
         public bool Contains(T item)
@@ -112,9 +116,9 @@ namespace ArrayList
                 throw new ArgumentNullException("Array should not be NULL.");
             }
 
-            if (index < array.Length - 1)
+            if (index > array.Length - 1)
             {
-                throw new ArgumentOutOfRangeException("Index is less than the bottom of the array.");
+                throw new ArgumentOutOfRangeException("Index is less than the bottom of the array.", nameof(index));
             }
 
             if (array.Rank != 1)
@@ -132,13 +136,13 @@ namespace ArrayList
 
         public IEnumerator<T> GetEnumerator()
         {
-            int startCount = Count;
+            int modNumber = ModCount;
 
             for (int i = 0; i < Count; i++)
             {
-                if (startCount != Count)
+                if (modNumber != ModCount)
                 {
-                    throw new InvalidOperationException("The initial size of the list has changed.");
+                    throw new InvalidOperationException("List has been changed.");
                 }
 
                 yield return items[i];
@@ -191,6 +195,7 @@ namespace ArrayList
                 }
             }
 
+            ModCount++;
             return false;
         }
 
@@ -207,6 +212,7 @@ namespace ArrayList
             }
 
             Count--;
+            ModCount++;
         }
 
         public void TrimExcess()
