@@ -11,7 +11,7 @@ namespace SinglyLinkedList
 
         public int Count { get; private set; }
 
-        private int modCount = 0;
+        private int modCount;
 
         public SinglyLinkedList() { }
 
@@ -236,13 +236,13 @@ namespace SinglyLinkedList
 
         public IEnumerator<T> GetEnumerator()
         {
-            int modNumber = modCount;
+            int initialModCount = modCount;
 
             ListItem<T> current = First;
 
             while (current != null)
             {
-                if (modNumber != modCount)
+                if (initialModCount != modCount)
                 {
                     throw new InvalidOperationException("List has been changed.");
                 }
@@ -264,12 +264,17 @@ namespace SinglyLinkedList
                 return true;
             }
 
-            if (ReferenceEquals(obj, null) || obj.GetType() != GetType() || Count != ((SinglyLinkedList<T>)obj).Count)
+            if (ReferenceEquals(obj, null) || obj.GetType() != GetType())
             {
                 return false;
             }
 
             SinglyLinkedList<T> inputList = (SinglyLinkedList<T>)obj;
+
+            if(Count != inputList.Count)
+            {
+                return false;
+            }
 
             ListItem<T> thisItem = First;
             ListItem<T> inputItem = inputList.First;
@@ -307,7 +312,7 @@ namespace SinglyLinkedList
 
             foreach (var e in this)
             {
-                result.Append(e + ", ");
+                result.Append(e).Append(", ");
             }
 
             if (result.Length > 2)

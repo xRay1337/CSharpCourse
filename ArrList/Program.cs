@@ -6,7 +6,7 @@ namespace ArrayList
     {
         static void Main(string[] args)
         {
-            ArrayList<int?> arrList1 = new ArrayList<int?>();
+            ArrayList<int> arrList1 = new ArrayList<int>();
 
             int[] array = new int[30];
 

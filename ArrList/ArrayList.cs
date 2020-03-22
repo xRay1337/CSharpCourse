@@ -1,13 +1,14 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Text;
 
 namespace ArrayList
 {
     class ArrayList<T> : IList<T>
     {
         private T[] items;
-        private int modCount = 0;
+        private int modCount;
 
         public int Count { get; private set; }
 
@@ -79,6 +80,11 @@ namespace ArrayList
         {
             modCount++;
 
+            if (item == null)
+            {
+                item = default;
+            }
+
             if (Count >= items.Length)
             {
                 IncreaseCapacity();
@@ -116,11 +122,6 @@ namespace ArrayList
 
         public bool Contains(T item)
         {
-            //if(item == null)
-            //{
-
-            //}
-
             return IndexOf(item) >= 0 ? true : false;
         }
 
@@ -163,9 +164,16 @@ namespace ArrayList
         {
             for (int i = 0; i < Count; i++)
             {
-                if (items[i].Equals(item))
+                try
                 {
-                    return i;
+                    if (items[i].Equals(item))
+                    {
+                        return i;
+                    }
+                }
+                catch (NullReferenceException)
+                {
+                    continue;
                 }
             }
 
@@ -229,7 +237,21 @@ namespace ArrayList
 
         public override string ToString()
         {
-            return "[ " + string.Join(", ", this) + " ]";
+            StringBuilder result = new StringBuilder("[ ");
+
+            foreach (var e in this)
+            {
+                result.Append(e).Append(", ");
+            }
+
+            if (result.Length > 2)
+            {
+                result.Remove(result.Length - 2, 2);
+            }
+
+            result.Append(" ]");
+
+            return result.ToString();
         }
 
         public override bool Equals(object obj)
@@ -239,7 +261,7 @@ namespace ArrayList
                 return true;
             }
 
-            if (ReferenceEquals(obj, null) || obj.GetType() != GetType())
+            if (obj is null || obj.GetType() != GetType())
             {
                 return false;
             }
