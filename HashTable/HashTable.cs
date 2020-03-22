@@ -17,11 +17,11 @@ namespace HashTable
 
         public int Count { get; private set; }
 
-        private int ModCount { get; set; }
+        private int modCount = 0;
 
         public bool IsReadOnly
         {
-            get { return false; }
+            get => false;
         }
 
         private int GetIndex(T item)
@@ -31,6 +31,8 @@ namespace HashTable
 
         public void Add(T item)
         {
+            modCount++;
+
             int index = GetIndex(item);
 
             if (array[index] == null)
@@ -47,14 +49,18 @@ namespace HashTable
             }
 
             Count++;
-            ModCount++;
         }
 
         public void Clear()
         {
-            array = new List<T>[array.Length];
+            modCount++;
+
+            for (int i = 0; i < array.Length; i++)
+            {
+                array[i] = default;
+            }
+
             Count = 0;
-            ModCount++;
         }
 
         public bool Contains(T item)
@@ -82,16 +88,6 @@ namespace HashTable
                 throw new ArgumentNullException("Array should not be NULL.");
             }
 
-            if (index > array.Length - 1)
-            {
-                throw new ArgumentOutOfRangeException("Index is less than the bottom of the array.");
-            }
-
-            if (array.Rank != 1)
-            {
-                throw new ArgumentException("The destination array is multidimensional.");
-            }
-
             if (Count > array.Length - index)
             {
                 throw new ArgumentException("The number of elements in the source array is greater than the available number of elements from the index to the end of the destination array.");
@@ -102,6 +98,7 @@ namespace HashTable
 
         public bool Remove(T item)
         {
+            modCount++;
             int index = GetIndex(item);
 
             if (array[index] == null)
@@ -116,13 +113,12 @@ namespace HashTable
                 Count--;
             }
 
-            ModCount++;
             return deleted;
         }
 
         public IEnumerator<T> GetEnumerator()
         {
-            int modNumber = ModCount;
+            int modNumber = modCount;
 
             foreach (var index in array)
             {
@@ -130,7 +126,7 @@ namespace HashTable
                 {
                     foreach (var element in index)
                     {
-                        if (modNumber != ModCount)
+                        if (modNumber != modCount)
                         {
                             throw new InvalidOperationException("Table has been changed.");
                         }

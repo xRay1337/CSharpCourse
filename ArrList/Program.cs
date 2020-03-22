@@ -19,13 +19,13 @@ namespace ArrayList
             Console.WriteLine(arrList1);
             Console.WriteLine();
 
-            arrList1.RemoveAt(5);
             Console.WriteLine("Удаляем 5й элемент:");
+            arrList1.RemoveAt(5);
             Console.WriteLine(arrList1);
             Console.WriteLine();
 
-            arrList1.Remove(5);
             Console.WriteLine("Удаляем элемент с значениием 5:");
+            arrList1.Remove(5);
             Console.WriteLine(arrList1);
             Console.WriteLine();
 
@@ -35,13 +35,24 @@ namespace ArrayList
             Console.WriteLine("Индекс элемента со значениием 10 = {0}", arrList1.IndexOf(10));
             Console.WriteLine();
 
-            arrList1.CopyTo(array, 6);
             Console.WriteLine("Копирование в массив из 30 элементов:");
+            arrList1.CopyTo(array, 6);
             Console.WriteLine("[ " + string.Join(", ", array) + " ]");
             Console.WriteLine();
 
-            arrList1.Insert(0, 20);
-            Console.WriteLine("Вставка числа 20 в начало:");
+
+            Console.WriteLine("Вставка числа 30 в начало:");
+            arrList1.Insert(0, 30);
+            Console.WriteLine(arrList1);
+            Console.WriteLine();
+
+            Console.WriteLine("Вставка числа 30 в середину:");
+            arrList1.Insert(arrList1.Count / 2, 30);
+            Console.WriteLine(arrList1);
+            Console.WriteLine();
+
+            Console.WriteLine("Вставка числа 30 в конец:");
+            arrList1.Insert(arrList1.Count, 30);
             Console.WriteLine(arrList1);
             Console.WriteLine();
 
@@ -52,9 +63,20 @@ namespace ArrayList
             Console.WriteLine("arrList2 эквивалентен arrList3? {0}", arrList2.Equals(arrList3));
             Console.WriteLine();
 
+            Console.WriteLine("Лист после очистки:");
+            arrList1.Clear();
+            Console.WriteLine(arrList1);
+            Console.WriteLine();
+
             Console.WriteLine("Хэш для arrList1 = {0}", arrList1.GetHashCode());
             Console.WriteLine("Хэш для arrList2 = {0}", arrList2.GetHashCode());
             Console.WriteLine("Хэш для arrList3 = {0}", arrList3.GetHashCode());
+
+            ArrayList<string> arrString = new ArrayList<string>();
+            string str = null;
+            arrString.Add(str);
+
+            Console.WriteLine(arrString);
 
             Console.ReadKey();
         }

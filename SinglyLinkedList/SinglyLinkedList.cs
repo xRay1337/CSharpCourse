@@ -11,11 +11,14 @@ namespace SinglyLinkedList
 
         public int Count { get; private set; }
 
+        private int modCount = 0;
+
         public SinglyLinkedList() { }
 
         public void Add(T data)
         {
             CheckData(data);
+            modCount++;
 
             ListItem<T> newItem = new ListItem<T>(data);
 
@@ -60,6 +63,7 @@ namespace SinglyLinkedList
         public bool Remove(T data)
         {
             CheckData(data);
+            modCount++;
 
             if (First != null && First.Data.Equals(data))
             {
@@ -97,6 +101,7 @@ namespace SinglyLinkedList
         public ListItem<T> RemoveAt(int index)
         {
             CheckIndex(index);
+            modCount++;
 
             if (index == 0)
             {
@@ -125,6 +130,7 @@ namespace SinglyLinkedList
         {
             CheckIndex(index);
             CheckData(data);
+            modCount++;
 
             ListItem<T> current = First;
 
@@ -150,6 +156,7 @@ namespace SinglyLinkedList
         {
             CheckIndex(index);
             CheckData(data);
+            modCount++;
 
             if (index == 0)
             {
@@ -176,6 +183,7 @@ namespace SinglyLinkedList
 
         public void Reverce()
         {
+            modCount++;
             SinglyLinkedList<T> newList = new SinglyLinkedList<T>();
 
             foreach (var e in this)
@@ -228,10 +236,17 @@ namespace SinglyLinkedList
 
         public IEnumerator<T> GetEnumerator()
         {
+            int modNumber = modCount;
+
             ListItem<T> current = First;
 
             while (current != null)
             {
+                if (modNumber != modCount)
+                {
+                    throw new InvalidOperationException("List has been changed.");
+                }
+
                 yield return current.Data;
                 current = current.Next;
             }

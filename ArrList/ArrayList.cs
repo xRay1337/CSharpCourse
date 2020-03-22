@@ -7,36 +7,32 @@ namespace ArrayList
     class ArrayList<T> : IList<T>
     {
         private T[] items;
+        private int modCount = 0;
 
         public int Count { get; private set; }
 
-        private int ModCount { get; set; }
-
         public int Capacity
         {
-            get
-            {
-                return items.Length;
-            }
+            get => items.Length;
+
             set
             {
                 if (value < Count)
                 {
-                    throw new ArgumentOutOfRangeException("Value less than list size.", nameof(value));
+                    throw new ArgumentOutOfRangeException(nameof(value), "Value less than list size.");
                 }
 
                 if (value > Count)
                 {
-                    T[] old = items;
-                    items = new T[value];
-                    Array.Copy(old, items, old.Length);
+                    modCount++;
+                    Array.Resize(ref items, value);
                 }
             }
         }
 
         public bool IsReadOnly
         {
-            get { return false; }
+            get => false;
         }
 
         public T this[int index]
@@ -45,13 +41,21 @@ namespace ArrayList
             {
                 if (index < 0 || index >= Count)
                 {
-                    throw new IndexOutOfRangeException("Invalid value.");
+                    throw new ArgumentOutOfRangeException(nameof(index), "Invalid index.");
                 }
 
                 return items[index];
             }
+
             set
             {
+                modCount++;
+
+                if (index < 0 || index >= Count)
+                {
+                    throw new ArgumentOutOfRangeException(nameof(index), "Invalid index.");
+                }
+
                 items[index] = value;
             }
         }
@@ -65,7 +69,7 @@ namespace ArrayList
         {
             if (capacity < 0)
             {
-                throw new ArgumentException("Need positive capacity.", nameof(capacity));
+                throw new ArgumentOutOfRangeException(nameof(capacity), "A non-negative number is required.");
             }
 
             items = new T[capacity];
@@ -73,6 +77,8 @@ namespace ArrayList
 
         public void Add(T item)
         {
+            modCount++;
+
             if (Count >= items.Length)
             {
                 IncreaseCapacity();
@@ -80,55 +86,49 @@ namespace ArrayList
 
             items[Count] = item;
             Count++;
-            ModCount++;
         }
 
         private void IncreaseCapacity()
         {
-            T[] old = items;
-            items = new T[old.Length * 2];
-            Array.Copy(old, items, old.Length);
+            modCount++;
+
+            if (items.Length == 0)
+            {
+                Array.Resize(ref items, 1);
+            }
+            else
+            {
+                Array.Resize(ref items, items.Length * 2);
+            }
         }
 
         public void Clear()
         {
-            items = new T[items.Length];
-            ModCount++;
+            modCount++;
+
+            for (int i = 0; i < Count; i++)
+            {
+                items[i] = default;
+            }
+
+            Count = 0;
         }
 
         public bool Contains(T item)
         {
-            for (int i = 0; i < Count; i++)
-            {
-                if (items[i].Equals(item))
-                {
-                    return true;
-                }
-            }
-
-            return false;
+            return IndexOf(item) >= 0 ? true : false;
         }
 
         public void CopyTo(T[] array, int index)
         {
             if (array == null)
             {
-                throw new ArgumentNullException("Array should not be NULL.");
-            }
-
-            if (index > array.Length - 1)
-            {
-                throw new ArgumentOutOfRangeException("Index is less than the bottom of the array.", nameof(index));
-            }
-
-            if (array.Rank != 1)
-            {
-                throw new ArgumentException("The destination array is multidimensional.");
+                throw new ArgumentNullException(nameof(array), "Array should not be NULL.");
             }
 
             if (Count > array.Length - index)
             {
-                throw new ArgumentException("The number of elements in the source array is greater than the available number of elements from the index to the end of the destination array.");
+                throw new ArgumentException("The number of elements in the source array is greater than the available number of elements from the index to the end of the destination array.", nameof(index));
             }
 
             Array.Copy(items, 0, array, index, Count);
@@ -136,11 +136,11 @@ namespace ArrayList
 
         public IEnumerator<T> GetEnumerator()
         {
-            int modNumber = ModCount;
+            int modNumber = modCount;
 
             for (int i = 0; i < Count; i++)
             {
-                if (modNumber != ModCount)
+                if (modNumber != modCount)
                 {
                     throw new InvalidOperationException("List has been changed.");
                 }
@@ -169,33 +169,34 @@ namespace ArrayList
 
         public void Insert(int index, T item)
         {
-            if (Count + 1 > items.Length)
+            if (index < 0 || index > Count + 1)
+            {
+                throw new ArgumentOutOfRangeException(nameof(index), "Invalid index.");
+            }
+
+            if (Count + 1 == items.Length)
             {
                 IncreaseCapacity();
             }
 
+            modCount++;
             Count++;
 
-            for (int i = Count; i > index; i--)
-            {
-                items[i] = items[i - 1];
-            }
+            Array.Copy(items, index, items, index + 1, Count - index);
 
             items[index] = item;
         }
 
         public bool Remove(T item)
         {
-            for (int i = 0; i < Count; i++)
+            int itemIndex = IndexOf(item);
+
+            if (itemIndex != -1)
             {
-                if (items[i].Equals(item))
-                {
-                    RemoveAt(i);
-                    return true;
-                }
+                RemoveAt(itemIndex);
+                return true;
             }
 
-            ModCount++;
             return false;
         }
 
@@ -203,23 +204,22 @@ namespace ArrayList
         {
             if (index < 0 || index >= Count)
             {
-                throw new IndexOutOfRangeException("Invalid value.");
+                throw new ArgumentOutOfRangeException(nameof(index), "Invalid index.");
             }
 
-            for (int i = index; i < Count - 1; i++)
-            {
-                items[i] = items[i + 1];
-            }
+            modCount++;
+
+            Array.Copy(items, index + 1, items, index, Count - index - 1);
 
             Count--;
-            ModCount++;
         }
 
         public void TrimExcess()
         {
-            T[] old = items;
-            items = new T[Count];
-            Array.Copy(old, items, Count);
+            if (items.Length != Count)
+            {
+                Array.Resize(ref items, Count);
+            }
         }
 
         public override string ToString()
