@@ -116,6 +116,11 @@ namespace ArrayList
 
         public bool Contains(T item)
         {
+            //if(item == null)
+            //{
+
+            //}
+
             return IndexOf(item) >= 0 ? true : false;
         }
 
