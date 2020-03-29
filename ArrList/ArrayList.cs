@@ -31,10 +31,7 @@ namespace ArrayList
             }
         }
 
-        public bool IsReadOnly
-        {
-            get => false;
-        }
+        public bool IsReadOnly => false;
 
         public T this[int index]
         {
@@ -80,11 +77,6 @@ namespace ArrayList
         {
             modCount++;
 
-            if (item == null)
-            {
-                item = default;
-            }
-
             if (Count >= items.Length)
             {
                 IncreaseCapacity();
@@ -111,22 +103,22 @@ namespace ArrayList
         public void Clear()
         {
             modCount++;
-
-            for (int i = 0; i < Count; i++)
-            {
-                items[i] = default;
-            }
-
+            Array.Clear(items, 0, Count - 1);
             Count = 0;
         }
 
         public bool Contains(T item)
         {
-            return IndexOf(item) >= 0 ? true : false;
+            return IndexOf(item) >= 0;
         }
 
         public void CopyTo(T[] array, int index)
         {
+            if (index < 0 || index > Count + 1)
+            {
+                throw new ArgumentOutOfRangeException(nameof(index), "Invalid index.");
+            }
+
             if (array == null)
             {
                 throw new ArgumentNullException(nameof(array), "Array should not be NULL.");
@@ -134,7 +126,8 @@ namespace ArrayList
 
             if (Count > array.Length - index)
             {
-                throw new ArgumentException("The number of elements in the source array is greater than the available number of elements from the index to the end of the destination array.", nameof(index));
+                throw new ArgumentException(@"The number of elements in the source array is greater than the available number of elements 
+                                                from the index to the end of the destination array.", nameof(index));
             }
 
             Array.Copy(items, 0, array, index, Count);
@@ -164,16 +157,9 @@ namespace ArrayList
         {
             for (int i = 0; i < Count; i++)
             {
-                try
+                if (Equals(items[i], item))
                 {
-                    if (items[i].Equals(item))
-                    {
-                        return i;
-                    }
-                }
-                catch (NullReferenceException)
-                {
-                    continue;
+                    return i;
                 }
             }
 
@@ -182,12 +168,12 @@ namespace ArrayList
 
         public void Insert(int index, T item)
         {
-            if (index < 0 || index > Count + 1)
+            if (index < 0 || index > Count)
             {
                 throw new ArgumentOutOfRangeException(nameof(index), "Invalid index.");
             }
 
-            if (Count + 1 == items.Length)
+            if (Count + 1 >= items.Length || index == items.Length)
             {
                 IncreaseCapacity();
             }
@@ -275,7 +261,7 @@ namespace ArrayList
 
             for (int i = 0; i < Count; i++)
             {
-                if (!items[i].Equals(o.items[i]))
+                if (!Equals(items[i], o.items[i]))
                 {
                     return false;
                 }
@@ -291,7 +277,14 @@ namespace ArrayList
 
             foreach (var e in this)
             {
-                hash = prime * hash + e.GetHashCode();
+                if (e is null)
+                {
+                    hash = prime * hash;
+                }
+                else
+                {
+                    hash = prime * hash + e.GetHashCode();
+                }
             }
 
             return hash;

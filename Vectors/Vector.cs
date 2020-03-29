@@ -3,9 +3,31 @@ using System.Text;
 
 namespace Vectors
 {
-    class Vector
+    public class Vector
     {
         private double[] coordinates;
+
+        public double this[int index]
+        {
+            get
+            {
+                if (index < 0)
+                {
+                    throw new ArgumentException("Argument must be positive.", nameof(index));
+                }
+
+                return coordinates[index];
+            }
+            set
+            {
+                if (index < 0)
+                {
+                    throw new ArgumentException("Argument must be positive.", nameof(index));
+                }
+
+                coordinates[index] = value;
+            }
+        }
 
         public Vector(int size)
         {

@@ -7,28 +7,27 @@ namespace SinglyLinkedList
 {
     class SinglyLinkedList<T> : IEnumerable<T>
     {
-        public ListItem<T> First { get; private set; }
+        private ListItem<T> first;
+
+        public T First { get => first.Data; }
 
         public int Count { get; private set; }
 
         private int modCount;
 
-        public SinglyLinkedList() { }
-
         public void Add(T data)
         {
-            CheckData(data);
             modCount++;
 
             ListItem<T> newItem = new ListItem<T>(data);
 
-            if (First == null)
+            if (first is null)
             {
-                First = newItem;
+                first = newItem;
             }
             else
             {
-                ListItem<T> last = First;
+                ListItem<T> last = first;
 
                 while (last.Next != null)
                 {
@@ -41,39 +40,38 @@ namespace SinglyLinkedList
             Count++;
         }
 
-        public ListItem<T> ElementAt(int index)
+        public T ElementAt(int index)
         {
-            CheckIndex(index);
+            CheckIndex(index, Count);
 
-            ListItem<T> result = First;
+            ListItem<T> result = first;
 
             int i = 0;
 
-            for (ListItem<T> current = First; current != null; current = current.Next, i++)
+            for (ListItem<T> current = first; current != null; current = current.Next, i++)
             {
                 if (i == index)
                 {
-                    return current;
+                    return current.Data;
                 }
             }
 
-            return result;
+            return result.Data;
         }
 
         public bool Remove(T data)
         {
-            CheckData(data);
             modCount++;
 
-            if (First != null && First.Data.Equals(data))
+            if (first != null && first.Data.Equals(data))
             {
-                First = First.Next;
+                first = first.Next;
                 Count--;
                 return true;
             }
 
-            ListItem<T> prev = First;
-            ListItem<T> current = First.Next;
+            ListItem<T> prev = first;
+            ListItem<T> current = first.Next;
 
             for (int i = 1; i < Count - 1; i++)
             {
@@ -93,46 +91,46 @@ namespace SinglyLinkedList
 
         public T RemoveFirst()
         {
-            T firstData = First.Data;
+            if (Count == 0)
+            {
+                throw new InvalidOperationException("The list is empty.");
+            }
+
+            T firstData = first.Data;
             RemoveAt(0);
             return firstData;
         }
 
-        public ListItem<T> RemoveAt(int index)
+        public T RemoveAt(int index)
         {
-            CheckIndex(index);
+            CheckIndex(index, Count);
             modCount++;
 
             if (index == 0)
             {
-                ListItem<T> deleted = First;
-                First = First.Next;
+                ListItem<T> deleted = first;
+                first = first.Next;
                 Count--;
-                return deleted;
+                return deleted.Data;
             }
 
-            ListItem<T> prev = First;
-            ListItem<T> current = First;
+            ListItem<T> prev = first;
+            ListItem<T> current = first;
 
-            for (int i = 0; i < index; i++)
-            {
-                prev = current;
-                current = current.Next;
-            }
+            FindItem(index, ref prev, ref current);
 
             prev.Next = current.Next;
 
             Count--;
-            return current;
+            return current.Data;
         }
 
         public T SetAt(int index, T data)
         {
-            CheckIndex(index);
-            CheckData(data);
+            CheckIndex(index, Count);
             modCount++;
 
-            ListItem<T> current = First;
+            ListItem<T> current = first;
 
             for (int i = 1; i <= index; i++)
             {
@@ -147,15 +145,13 @@ namespace SinglyLinkedList
 
         public void InsertFirst(T data)
         {
-            CheckData(data);
-            First = new ListItem<T>(data, First);
+            first = new ListItem<T>(data, first);
             Count++;
         }
 
         public void InsertAt(int index, T data)
         {
-            CheckIndex(index);
-            CheckData(data);
+            CheckIndex(index, Count + 1);
             modCount++;
 
             if (index == 0)
@@ -164,14 +160,10 @@ namespace SinglyLinkedList
                 return;
             }
 
-            ListItem<T> prev = First;
-            ListItem<T> current = First.Next;
+            ListItem<T> prev = first;
+            ListItem<T> current = first.Next;
 
-            for (int i = 1; i <= index; i++)
-            {
-                prev = current;
-                current = current.Next;
-            }
+            FindItem(index, ref prev, ref current);
 
             ListItem<T> newItem = new ListItem<T>(data);
 
@@ -181,7 +173,7 @@ namespace SinglyLinkedList
             Count++;
         }
 
-        public void Reverce()
+        public void Reverse()
         {
             modCount++;
             SinglyLinkedList<T> newList = new SinglyLinkedList<T>();
@@ -191,46 +183,53 @@ namespace SinglyLinkedList
                 newList.InsertFirst(e);
             }
 
-            First = newList.First;
+            first = newList.first;
         }
 
-        public void Copy(ref SinglyLinkedList<T> singlyLinkedList)
+        public SinglyLinkedList<T> Copy()
         {
-            singlyLinkedList = new SinglyLinkedList<T>()
-            {
-                First = new ListItem<T>(First.Data)
-            };
+            SinglyLinkedList<T> newList = new SinglyLinkedList<T>();
 
-            ListItem<T> currentSource = First.Next;
-            ListItem<T> currentOutput = singlyLinkedList.First;
+            if (first is null)
+            {
+                return newList;
+            }
+
+            newList.first = new ListItem<T>(first.Data);
+
+            ListItem<T> currentOld = first.Next;
+            ListItem<T> currentNew = newList.first;
 
             for (int i = 1; i < Count; i++)
             {
-                currentOutput.Next = new ListItem<T>(currentSource.Data);
+                currentNew.Next = new ListItem<T>(currentOld.Data);
 
-                currentSource = currentSource.Next;
-                currentOutput = currentOutput.Next;
+                currentOld = currentOld.Next;
+                currentNew = currentNew.Next;
             }
+
+            return newList;
         }
 
-        private void CheckIndex(int index)
+        private void CheckIndex(int index, int maxIndex)
         {
             if (index < 0)
             {
-                throw new ArgumentException("Need positie index.", nameof(index));
+                throw new ArgumentException("Need positive index.", nameof(index));
             }
 
-            if (index >= Count)
+            if (index >= maxIndex)
             {
                 throw new IndexOutOfRangeException("The index must be smaller than the list.");
             }
         }
 
-        private void CheckData(T data)
+        private void FindItem(int index, ref ListItem<T> prev, ref ListItem<T> current)
         {
-            if (data == null)
+            for (int i = 0; i < index; i++)
             {
-                throw new ArgumentNullException("Data must not be null.", nameof(data));
+                prev = current;
+                current = current.Next;
             }
         }
 
@@ -238,7 +237,7 @@ namespace SinglyLinkedList
         {
             int initialModCount = modCount;
 
-            ListItem<T> current = First;
+            ListItem<T> current = first;
 
             while (current != null)
             {
@@ -254,7 +253,7 @@ namespace SinglyLinkedList
 
         IEnumerator IEnumerable.GetEnumerator()
         {
-            return ((IEnumerable)this).GetEnumerator();
+            return GetEnumerator();
         }
 
         public override bool Equals(object obj)
@@ -264,20 +263,20 @@ namespace SinglyLinkedList
                 return true;
             }
 
-            if (ReferenceEquals(obj, null) || obj.GetType() != GetType())
+            if (obj is null || obj.GetType() != GetType())
             {
                 return false;
             }
 
             SinglyLinkedList<T> inputList = (SinglyLinkedList<T>)obj;
 
-            if(Count != inputList.Count)
+            if (Count != inputList.Count)
             {
                 return false;
             }
 
-            ListItem<T> thisItem = First;
-            ListItem<T> inputItem = inputList.First;
+            ListItem<T> thisItem = first;
+            ListItem<T> inputItem = inputList.first;
 
             for (int i = 0; i < Count; i++)
             {

@@ -7,22 +7,23 @@ namespace HashTable
     class HashTable<T> : ICollection<T>
     {
         private List<T>[] array;
+        private int modCount;
 
-        public HashTable() : this(1000) { }
+        public HashTable() : this(10) { }
 
         public HashTable(int capacity)
         {
+            if (capacity < 1)
+            {
+                throw new ArgumentException("Capacity must be greater than 0.", nameof(capacity));
+            }
+
             array = new List<T>[capacity];
         }
 
         public int Count { get; private set; }
 
-        private int modCount = 0;
-
-        public bool IsReadOnly
-        {
-            get => false;
-        }
+        public bool IsReadOnly => false;
 
         private int GetIndex(T item)
         {
@@ -37,11 +38,7 @@ namespace HashTable
 
             if (array[index] == null)
             {
-                array[index] = new List<T>(1) { item };
-            }
-            else if (array[index].Contains(item))
-            {
-                return;
+                array[index] = new List<T>() { item };
             }
             else
             {
@@ -57,7 +54,7 @@ namespace HashTable
 
             for (int i = 0; i < array.Length; i++)
             {
-                array[i] = default;
+                array[i] = null;
             }
 
             Count = 0;
@@ -67,15 +64,9 @@ namespace HashTable
         {
             int index = GetIndex(item);
 
-            if (array[index] != null)
+            if (array[index] != null && array[index].Contains(item))
             {
-                foreach (var e in array[index])
-                {
-                    if (e.Equals(item))
-                    {
-                        return true;
-                    }
-                }
+                return true;
             }
 
             return false;
@@ -98,7 +89,6 @@ namespace HashTable
 
         public bool Remove(T item)
         {
-            modCount++;
             int index = GetIndex(item);
 
             if (array[index] == null)
@@ -106,6 +96,7 @@ namespace HashTable
                 return false;
             }
 
+            modCount++;
             bool deleted = array[index].Remove(item);
 
             if (deleted)
@@ -118,15 +109,15 @@ namespace HashTable
 
         public IEnumerator<T> GetEnumerator()
         {
-            int modNumber = modCount;
+            int initialModCount = modCount;
 
-            foreach (var index in array)
+            foreach (var list in array)
             {
-                if (index != null)
+                if (list != null)
                 {
-                    foreach (var element in index)
+                    foreach (var element in list)
                     {
-                        if (modNumber != modCount)
+                        if (initialModCount != modCount)
                         {
                             throw new InvalidOperationException("Table has been changed.");
                         }
@@ -154,7 +145,7 @@ namespace HashTable
                 return true;
             }
 
-            if (ReferenceEquals(obj, null) || obj.GetType() != GetType())
+            if (obj is null || obj.GetType() != GetType())
             {
                 return false;
             }
@@ -166,11 +157,45 @@ namespace HashTable
                 return false;
             }
 
-            foreach (var e in this)
+            for (int i = 0; i < array.Length; i++)
             {
-                if (!o.Contains(e))
+                if (array[i] is null && o.array[i] != null || array[i] != null && o.array[i] is null)
                 {
                     return false;
+                }
+
+                if (array[i] is null && o.array[i] is null)
+                {
+                    continue;
+                }
+
+                if (array[i].Count != o.array[i].Count)
+                {
+                    return false;
+                }
+
+                T[] thisArray = new T[array[i].Count];
+                T[] objArray = new T[o.array[i].Count];
+
+                Array.Sort(thisArray);
+                Array.Sort(objArray);
+
+                for (int j = 0; j < thisArray.Length; j++)
+                {
+                    if (thisArray[j] is null && objArray[j] != null || thisArray[j] != null && objArray[j] is null)
+                    {
+                        return false;
+                    }
+
+                    if (thisArray[j] is null && objArray[j] is null)
+                    {
+                        continue;
+                    }
+
+                    if (!thisArray[j].Equals(objArray[j]))
+                    {
+                        return false;
+                    }
                 }
             }
 

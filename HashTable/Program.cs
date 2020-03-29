@@ -44,6 +44,10 @@ namespace HashTable
             Console.WriteLine("Размер = {0}", hashTable.Count);
             Console.WriteLine();
 
+            HashTable<int> hashTable1 = new HashTable<int> { 1, 2, 3, 2 };
+            HashTable<int> hashTable2 = new HashTable<int> { 1, 2, 2, 4 };
+            Console.WriteLine(hashTable1.Equals(hashTable2));
+
             Console.ReadKey();
         }
     }
