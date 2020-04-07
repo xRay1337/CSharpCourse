@@ -31,7 +31,7 @@ namespace Vectors
 
         public Vector(int size)
         {
-            if (size <= 0)
+             if (size <= 0)
             {
                 throw new ArgumentException($"Size {size} <= 0.", nameof(size));
             }
@@ -113,7 +113,7 @@ namespace Vectors
             return this;
         }
 
-        public Vector Multiply(int scalar)
+        public Vector Multiply(double scalar)
         {
             for (int i = 0; i < coordinates.Length; i++)
             {

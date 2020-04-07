@@ -20,8 +20,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Range", "Diapason\Range.csp
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ArrayListHome", "ArrayListHome\ArrayListHome.csproj", "{53E5787C-6647-4031-A17A-951D56EE7930}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ArrayList", "ArrList\ArrayList.csproj", "{6628322F-CED2-4AAC-A9EB-A75049C25CD2}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SinglyLinkedList", "SinglyLinkedList\SinglyLinkedList.csproj", "{5CCFF3E4-A559-48FF-9D0B-344E1FEADE3A}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HashTable", "HashTable\HashTable.csproj", "{C239AB90-2FEF-4D3D-AF29-AB843BE8BC26}"
@@ -52,10 +50,6 @@ Global
 		{53E5787C-6647-4031-A17A-951D56EE7930}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{53E5787C-6647-4031-A17A-951D56EE7930}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{53E5787C-6647-4031-A17A-951D56EE7930}.Release|Any CPU.Build.0 = Release|Any CPU
-		{6628322F-CED2-4AAC-A9EB-A75049C25CD2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{6628322F-CED2-4AAC-A9EB-A75049C25CD2}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{6628322F-CED2-4AAC-A9EB-A75049C25CD2}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{6628322F-CED2-4AAC-A9EB-A75049C25CD2}.Release|Any CPU.Build.0 = Release|Any CPU
 		{5CCFF3E4-A559-48FF-9D0B-344E1FEADE3A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{5CCFF3E4-A559-48FF-9D0B-344E1FEADE3A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5CCFF3E4-A559-48FF-9D0B-344E1FEADE3A}.Release|Any CPU.ActiveCfg = Release|Any CPU
