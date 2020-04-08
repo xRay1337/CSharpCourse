@@ -10,6 +10,8 @@ namespace HashTable
     {
         static void Main(string[] args)
         {
+            List<int> vs = new List<int>();
+            vs.CopyTo()
             Console.WriteLine("Создаём таблицу.");
             HashTable<string> hashTable = new HashTable<string> { "A", "B", "C" };
             Console.WriteLine("Исходная таблица: " + hashTable);
@@ -45,7 +47,7 @@ namespace HashTable
             Console.WriteLine();
 
             HashTable<int> hashTable1 = new HashTable<int> { 1, 2, 3, 2 };
-            HashTable<int> hashTable2 = new HashTable<int> { 1, 2, 2, 4 };
+            HashTable<int> hashTable2 = new HashTable<int> { 1, 2, 3, 2 };
             Console.WriteLine(hashTable1.Equals(hashTable2));
 
             Console.ReadKey();

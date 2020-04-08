@@ -131,8 +131,8 @@ namespace ArrayList
 
             if (Count > array.Length - index)
             {
-                throw new ArgumentException(@"The number of elements in the source array is greater than the available number of elements 
-                                                from the index to the end of the destination array.", nameof(index));
+                throw new ArgumentException(nameof(index), @"The number of elements in the source array is greater than the available number of elements 
+                                                from the index to the end of the destination array.");
             }
 
             Array.Copy(items, 0, array, index, Count);
@@ -203,7 +203,7 @@ namespace ArrayList
 
         public void RemoveAt(int index)
         {
-            CheckIndex(index, Count +1);
+            CheckIndex(index, Count + 1);
 
             modCount++;
 

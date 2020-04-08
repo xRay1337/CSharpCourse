@@ -76,6 +76,7 @@ namespace ArrayList
             ArrayList<string> arrString = new ArrayList<string>();
             string str = null;
             arrString.Add(str);
+            arrString.Remove(str);
 
             Console.WriteLine(arrString);
 

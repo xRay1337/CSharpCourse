@@ -9,7 +9,7 @@ namespace HashTable
         private List<T>[] array;
         private int modCount;
 
-        public HashTable() : this(10) { }
+        public HashTable() : this(100) { }
 
         public HashTable(int capacity)
         {
@@ -32,6 +32,11 @@ namespace HashTable
 
         public void Add(T item)
         {
+            if (item == null)
+            {
+                return;
+            }
+
             modCount++;
 
             int index = GetIndex(item);
@@ -51,17 +56,17 @@ namespace HashTable
         public void Clear()
         {
             modCount++;
-
-            for (int i = 0; i < array.Length; i++)
-            {
-                array[i] = null;
-            }
-
+            Array.Clear(array, 0, array.Length);
             Count = 0;
         }
 
         public bool Contains(T item)
         {
+            if (item == null)
+            {
+                return false;
+            }
+
             int index = GetIndex(item);
 
             if (array[index] != null && array[index].Contains(item))
@@ -76,12 +81,18 @@ namespace HashTable
         {
             if (array == null)
             {
-                throw new ArgumentNullException("Array should not be NULL.");
+                throw new ArgumentNullException(nameof(array), "Array should not be NULL.");
             }
 
             if (Count > array.Length - index)
             {
-                throw new ArgumentException("The number of elements in the source array is greater than the available number of elements from the index to the end of the destination array.");
+                throw new ArgumentException(nameof(index), @"The number of elements in the source array is greater than the available number of elements
+                                                from the index to the end of the destination array.");
+            }
+
+            if (index < 0 || index > array.Length - Count)
+            {
+                throw new ArgumentNullException(nameof(index), "Invalid index.");
             }
 
             Array.Copy(this.array, 0, array, index, Count);
@@ -89,6 +100,11 @@ namespace HashTable
 
         public bool Remove(T item)
         {
+            if (item == null)
+            {
+                return false;
+            }
+
             int index = GetIndex(item);
 
             if (array[index] == null)
@@ -145,7 +161,7 @@ namespace HashTable
                 return true;
             }
 
-            if (obj is null || obj.GetType() != GetType())
+            if (obj == null || obj.GetType() != GetType())
             {
                 return false;
             }
@@ -159,12 +175,12 @@ namespace HashTable
 
             for (int i = 0; i < array.Length; i++)
             {
-                if (array[i] is null && o.array[i] != null || array[i] != null && o.array[i] is null)
+                if (array[i] == null && o.array[i] != null || array[i] != null && o.array[i] == null)
                 {
                     return false;
                 }
 
-                if (array[i] is null && o.array[i] is null)
+                if (array[i] == null && o.array[i] == null)
                 {
                     continue;
                 }
@@ -182,12 +198,12 @@ namespace HashTable
 
                 for (int j = 0; j < thisArray.Length; j++)
                 {
-                    if (thisArray[j] is null && objArray[j] != null || thisArray[j] != null && objArray[j] is null)
+                    if (thisArray[j] == null && objArray[j] != null || thisArray[j] != null && objArray[j] == null)
                     {
                         return false;
                     }
 
-                    if (thisArray[j] is null && objArray[j] is null)
+                    if (thisArray[j] == null && objArray[j] == null)
                     {
                         continue;
                     }
@@ -209,7 +225,14 @@ namespace HashTable
 
             foreach (var e in this)
             {
-                hash = prime * hash + e.GetHashCode();
+                if (e == null)
+                {
+                    hash = prime * hash;
+                }
+                else
+                {
+                    hash = prime * hash + e.GetHashCode();
+                }
             }
 
             return hash;
