@@ -122,8 +122,6 @@ namespace ArrayList
 
         public void CopyTo(T[] array, int index)
         {
-            CheckIndex(index, array.Length - Count);
-
             if (array == null)
             {
                 throw new ArgumentNullException(nameof(array), "Array should not be NULL.");

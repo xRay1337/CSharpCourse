@@ -26,37 +26,40 @@ namespace LambdaExpression
             }
 
             Console.WriteLine();
-            var listUniqueNames = persons.Select(p => p.Name)
-                                            .Distinct()
-                                            .ToList();
+            var uniqueNameslist = persons
+                .Select(p => p.Name)
+                .Distinct()
+                .ToList();
 
-            string names = string.Join(", ", listUniqueNames);
+            var names = string.Join(", ", uniqueNameslist);
             Console.WriteLine("Имена: {0}.", names);
             Console.WriteLine();
 
-            var averageAgeMinors = persons.Where(p => p.Age < 18)
-                                            .Select(p => p.Age)
-                                            .Average();
+            var averageAgeOfMinors = persons
+                .Where(p => p.Age < 18)
+                .Select(p => p.Age)
+                .Average();
 
-            Console.WriteLine("Средний возраст до 18 = {0}.", averageAgeMinors);
+            Console.WriteLine("Средний возраст до 18 = {0}.", averageAgeOfMinors);
             Console.WriteLine();
 
-            var personByAge = persons.GroupBy(p => p.Name)
-                                        .ToDictionary(p => p.Key, p => p
-                                        .Average(a => a.Age));
+            var personsByNames = persons
+                .GroupBy(p => p.Name)
+                .ToDictionary(p => p.Key, p => p.Average(a => a.Age));
 
-            foreach (var e in personByAge)
+            foreach (var e in personsByNames)
             {
                 Console.WriteLine(e.Key + " " + e.Value);
             }
 
             Console.WriteLine();
 
-            var pers = persons.Where(p => p.Age >= 20 && p.Age <= 45)
-                                .OrderByDescending(p => p.Age)
-                                .ToList();
+            var personsByAge = persons
+                .Where(p => p.Age >= 20 && p.Age <= 45)
+                .OrderByDescending(p => p.Age)
+                .ToList();
 
-            foreach (var e in pers)
+            foreach (var e in personsByAge)
             {
                 Console.WriteLine(e);
             }
