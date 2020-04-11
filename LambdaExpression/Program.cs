@@ -26,19 +26,18 @@ namespace LambdaExpression
             }
 
             Console.WriteLine();
-            var uniqueNameslist = persons
+            var uniqueNamesList = persons
                 .Select(p => p.Name)
                 .Distinct()
                 .ToList();
 
-            var names = string.Join(", ", uniqueNameslist);
+            var names = string.Join(", ", uniqueNamesList);
             Console.WriteLine("Имена: {0}.", names);
             Console.WriteLine();
 
             var averageAgeOfMinors = persons
                 .Where(p => p.Age < 18)
-                .Select(p => p.Age)
-                .Average();
+                .Average(p => p.Age);
 
             Console.WriteLine("Средний возраст до 18 = {0}.", averageAgeOfMinors);
             Console.WriteLine();

@@ -10,8 +10,6 @@ namespace HashTable
     {
         static void Main(string[] args)
         {
-            List<int> vs = new List<int>();
-            vs.CopyTo()
             Console.WriteLine("Создаём таблицу.");
             HashTable<string> hashTable = new HashTable<string> { "A", "B", "C" };
             Console.WriteLine("Исходная таблица: " + hashTable);
