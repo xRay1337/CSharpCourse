@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 
 namespace SinglyLinkedList
 {
@@ -7,44 +6,6 @@ namespace SinglyLinkedList
     {
         static void Main(string[] args)
         {
-            for (int i = -30; i < 30; i++)
-            {
-                Console.WriteLine("{0} % {1} = {2}", i, 7, i % 7);
-            }
-
-            SinglyLinkedList<string> str = new SinglyLinkedList<string>();
-
-            //LinkedList<string> str1 = new LinkedList<string>();
-
-            //string st = null;
-
-            //str.Add(st);
-            //str.Add("123");
-            //foreach (var e in str1)
-            //{
-            //    if (e is null)
-            //    {
-            //        Console.WriteLine("null");
-            //    }
-            //    else
-            //    {
-            //        Console.WriteLine(e);
-
-            //    }
-            //}
-            //str.Remove("123");
-            //foreach (var e in str1)
-            //{
-            //    if (e is null)
-            //    {
-            //        Console.WriteLine("null");
-            //    }
-            //    else
-            //    {
-            //        Console.WriteLine(e);
-            //    }
-            //}
-
             SinglyLinkedList<int> list1 = new SinglyLinkedList<int> { 1, 2, 3, 4, 5 };
 
             Console.WriteLine("Тестовый список 1:");
@@ -98,8 +59,6 @@ namespace SinglyLinkedList
             SinglyLinkedList<int> list3 = new SinglyLinkedList<int>();
             SinglyLinkedList<int> list2 = list3.Copy();
             Console.WriteLine(list2);
-
-            //list2.
 
             Console.ReadKey();
         }

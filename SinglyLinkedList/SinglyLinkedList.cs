@@ -21,7 +21,7 @@ namespace SinglyLinkedList
 
             ListItem<T> newItem = new ListItem<T>(data);
 
-            if (first is null)
+            if (first == null)
             {
                 first = newItem;
             }
@@ -63,7 +63,7 @@ namespace SinglyLinkedList
         {
             modCount++;
 
-            if (first != null && first.Data.Equals(data))
+            if (first != null && ((first.Data == null && data == null) || first.Data.Equals(data)))
             {
                 first = first.Next;
                 Count--;
@@ -78,7 +78,7 @@ namespace SinglyLinkedList
                 prev = current;
                 current = current.Next;
 
-                if (current.Data.Equals(data))
+                if ((current.Data == null && data == null) || current.Data.Equals(data))
                 {
                     prev.Next = current.Next;
                     Count--;
@@ -190,7 +190,7 @@ namespace SinglyLinkedList
         {
             SinglyLinkedList<T> newList = new SinglyLinkedList<T>();
 
-            if (first is null)
+            if (first == null)
             {
                 return newList;
             }
@@ -263,7 +263,7 @@ namespace SinglyLinkedList
                 return true;
             }
 
-            if (obj is null || obj.GetType() != GetType())
+            if (obj == null || obj.GetType() != GetType())
             {
                 return false;
             }

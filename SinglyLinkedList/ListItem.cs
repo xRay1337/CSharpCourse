@@ -16,27 +16,5 @@
             Data = data;
             Next = next;
         }
-
-        public override bool Equals(object obj)
-        {
-            if (ReferenceEquals(obj, this))
-            {
-                return true;
-            }
-
-            if (obj is null || obj.GetType() != GetType())
-            {
-                return false;
-            }
-
-            ListItem<T> item = (ListItem<T>)obj;
-
-            return Data.Equals(item.Data);
-        }
-
-        public override int GetHashCode()
-        {
-            return Data.GetHashCode();
-        }
     }
 }
