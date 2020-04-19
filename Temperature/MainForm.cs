@@ -41,115 +41,76 @@ namespace Temperature
         {
             TextBoxFahrenheit.Clear();
             TextBoxKelvin.Clear();
-            CheckSymbol(sender, e);
+            Util.CheckEditSymbol(sender, e);
 
-            Refrash.Text = "Refrash";
-            refresh = true;
+            refresh = false;
+            Refresh.Text = "Clear";
         }
 
         private void TextBoxFahrenheit_KeyPress(object sender, KeyPressEventArgs e)
         {
             TextBoxCelsius.Clear();
             TextBoxKelvin.Clear();
-            CheckSymbol(sender, e);
+            Util.CheckEditSymbol(sender, e);
 
-            Refrash.Text = "Refrash";
-            refresh = true;
+            refresh = false;
+            Refresh.Text = "Clear";
         }
 
         private void TextBoxKelvin_KeyPress(object sender, KeyPressEventArgs e)
         {
             TextBoxCelsius.Clear();
             TextBoxFahrenheit.Clear();
-            CheckSymbol(sender, e);
+            Util.CheckEditSymbol(sender, e);
 
-            Refrash.Text = "Refrash";
-            refresh = true;
+            refresh = false;
+            Refresh.Text = "Clear";
         }
 
-        private void CheckSymbol(object sender, KeyPressEventArgs e)
-        {
-            if (!char.IsControl(e.KeyChar) && !char.IsDigit(e.KeyChar) && (e.KeyChar != '.') && (e.KeyChar != '-'))
-            {
-                e.Handled = true;
-            }
-
-            if ((((sender as TextBox).Text == "") || ((sender as TextBox).Text.IndexOf('.') > -1)) && ((e.KeyChar == '.')))
-            {
-                e.Handled = true;
-            }
-
-            if ((((sender as TextBox).Text != "") || ((sender as TextBox).Text.IndexOf('-') > -1)) && ((e.KeyChar == '-')))
-            {
-                e.Handled = true;
-            }
-        }
-
-        private void Refrash_Click(object sender, EventArgs e)
+        private void Refresh_Click(object sender, EventArgs e)
         {
             if ((TextBoxCelsius.Text == "" && TextBoxFahrenheit.Text == "" && TextBoxKelvin.Text == "") ||
                 (TextBoxCelsius.Text == "-" || TextBoxFahrenheit.Text == "-" || TextBoxKelvin.Text == "-"))
             {
-                TextBoxCelsius.Clear();
-                TextBoxFahrenheit.Clear();
-                TextBoxKelvin.Clear();
-
+                ClearAllTextBoxes();
                 return;
             }
 
             if (refresh)
             {
+                IScales scales;
+
                 if (TextBoxCelsius.Text != "")
                 {
-                    double celsius = Convert.ToDouble(TextBoxCelsius.Text.Replace('.', ','));
-
-                    if (celsius < -273.15)
-                    {
-                        celsius = -273.15;
-                    }
-
-                    TextBoxCelsius.Text = string.Format("{0:f2}", celsius);
-                    TextBoxFahrenheit.Text = string.Format("{0:f2}", (celsius * 1.8 + 32));
-                    TextBoxKelvin.Text = string.Format("{0:f2}", (celsius + 273.15));
+                    scales = new Celsius(Convert.ToDouble(TextBoxCelsius.Text.Replace('.', ',')));
                 }
                 else if (TextBoxFahrenheit.Text != "")
                 {
-                    double fahrenheit = Convert.ToDouble(TextBoxFahrenheit.Text.Replace('.', ','));
-
-                    if (fahrenheit < -459.67)
-                    {
-                        fahrenheit = -459.67;
-                    }
-
-                    TextBoxCelsius.Text = string.Format("{0:f2}", ((fahrenheit - 32) * 0.55555556));
-                    TextBoxFahrenheit.Text = string.Format("{0:f2}", fahrenheit);
-                    TextBoxKelvin.Text = string.Format("{0:f2}", ((fahrenheit - 32) * 0.55555556 + 273.15));
+                    scales = new Fahrenheit(Convert.ToDouble(TextBoxFahrenheit.Text.Replace('.', ',')));
                 }
                 else
                 {
-                    double kelvin = Convert.ToDouble(TextBoxKelvin.Text.Replace('.', ','));
-
-                    if (kelvin < 0)
-                    {
-                        kelvin = 0;
-                    }
-
-                    TextBoxCelsius.Text = string.Format("{0:f2}", (kelvin - 273.15));
-                    TextBoxFahrenheit.Text = string.Format("{0:f2}", ((kelvin - 273.15) * 0.55555556 + 32));
-                    TextBoxKelvin.Text = string.Format("{0:f2}", kelvin);
+                    scales = new Kelvin(Convert.ToDouble(TextBoxKelvin.Text.Replace('.', ',')));
                 }
 
-                refresh = false;
-                Refrash.Text = "Clear";
+                TextBoxCelsius.Text = $"{scales.GetCelsius():f2}";
+                TextBoxFahrenheit.Text = $"{scales.GetFahrenheit():f2}";
+                TextBoxKelvin.Text = $"{scales.GetKelvin():f2}";
             }
             else
             {
-                refresh = true;
-                Refrash.Text = "Refrash";
+                ClearAllTextBoxes();
+            }
 
-                TextBoxCelsius.Clear();
-                TextBoxFahrenheit.Clear();
-                TextBoxKelvin.Clear();
+            refresh = !refresh;
+            Refresh.Text = refresh ? "Refresh" : "Clear";
+        }
+
+        private void ClearAllTextBoxes()
+        {
+            foreach (TextBox textBox in Controls.OfType<TextBox>())
+            {
+                textBox.Clear();
             }
         }
 

@@ -8,6 +8,8 @@ namespace SinglyLinkedList
         {
             SinglyLinkedList<int> list1 = new SinglyLinkedList<int> { 1, 2, 3, 4, 5 };
 
+            Console.WriteLine(new Exception());
+
             Console.WriteLine("Тестовый список 1:");
             Console.WriteLine(list1);
             Console.WriteLine();

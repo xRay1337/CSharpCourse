@@ -37,7 +37,7 @@
             this.TextBoxCelsius = new System.Windows.Forms.TextBox();
             this.TextBoxFahrenheit = new System.Windows.Forms.TextBox();
             this.TextBoxKelvin = new System.Windows.Forms.TextBox();
-            this.Refrash = new System.Windows.Forms.Button();
+            this.Refresh = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // buttonMinimize
@@ -144,20 +144,20 @@
             this.TextBoxKelvin.TabIndex = 36;
             this.TextBoxKelvin.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.TextBoxKelvin_KeyPress);
             // 
-            // Refrash
+            // Refresh
             // 
-            this.Refrash.FlatAppearance.BorderColor = System.Drawing.Color.White;
-            this.Refrash.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.Refrash.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.Refrash.ForeColor = System.Drawing.Color.White;
-            this.Refrash.Location = new System.Drawing.Point(62, 255);
-            this.Refrash.Margin = new System.Windows.Forms.Padding(10);
-            this.Refrash.Name = "Refrash";
-            this.Refrash.Size = new System.Drawing.Size(182, 35);
-            this.Refrash.TabIndex = 37;
-            this.Refrash.Text = "Refrash";
-            this.Refrash.UseVisualStyleBackColor = true;
-            this.Refrash.Click += new System.EventHandler(this.Refrash_Click);
+            this.Refresh.FlatAppearance.BorderColor = System.Drawing.Color.White;
+            this.Refresh.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.Refresh.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.Refresh.ForeColor = System.Drawing.Color.White;
+            this.Refresh.Location = new System.Drawing.Point(62, 255);
+            this.Refresh.Margin = new System.Windows.Forms.Padding(10);
+            this.Refresh.Name = "Refrash";
+            this.Refresh.Size = new System.Drawing.Size(182, 35);
+            this.Refresh.TabIndex = 37;
+            this.Refresh.Text = "Refresh";
+            this.Refresh.UseVisualStyleBackColor = true;
+            this.Refresh.Click += new System.EventHandler(this.Refresh_Click);
             // 
             // MainForm
             // 
@@ -165,7 +165,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.Black;
             this.ClientSize = new System.Drawing.Size(300, 380);
-            this.Controls.Add(this.Refrash);
+            this.Controls.Add(this.Refresh);
             this.Controls.Add(this.TextBoxKelvin);
             this.Controls.Add(this.TextBoxFahrenheit);
             this.Controls.Add(this.TextBoxCelsius);
@@ -195,7 +195,7 @@
         private System.Windows.Forms.TextBox TextBoxCelsius;
         private System.Windows.Forms.TextBox TextBoxFahrenheit;
         private System.Windows.Forms.TextBox TextBoxKelvin;
-        private System.Windows.Forms.Button Refrash;
+        private System.Windows.Forms.Button Refresh;
     }
 }
 
