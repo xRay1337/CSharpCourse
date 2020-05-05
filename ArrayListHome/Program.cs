@@ -8,9 +8,6 @@ namespace ArrayListHome
     {
         static void Main(string[] args)
         {
-            var x;
-            Console.WriteLine(x);
-
             Console.WriteLine("Чтение из файла:");
 
             try

@@ -32,6 +32,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ArrayList", "ArrayList\Arra
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Temperature", "Temperature\Temperature.csproj", "{3C612F28-B9EC-4DDA-A6CD-1E7FA38B0C8D}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Test", "Test\Test.csproj", "{49D9C0AF-EB5A-4EDE-8751-84FFF7BBE7CE}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -78,6 +80,10 @@ Global
 		{3C612F28-B9EC-4DDA-A6CD-1E7FA38B0C8D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3C612F28-B9EC-4DDA-A6CD-1E7FA38B0C8D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3C612F28-B9EC-4DDA-A6CD-1E7FA38B0C8D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{49D9C0AF-EB5A-4EDE-8751-84FFF7BBE7CE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{49D9C0AF-EB5A-4EDE-8751-84FFF7BBE7CE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{49D9C0AF-EB5A-4EDE-8751-84FFF7BBE7CE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{49D9C0AF-EB5A-4EDE-8751-84FFF7BBE7CE}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

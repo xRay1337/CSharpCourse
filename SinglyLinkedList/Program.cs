@@ -8,8 +8,6 @@ namespace SinglyLinkedList
         {
             SinglyLinkedList<int> list1 = new SinglyLinkedList<int> { 1, 2, 3, 4, 5 };
 
-            Console.WriteLine(new Exception());
-
             Console.WriteLine("Тестовый список 1:");
             Console.WriteLine(list1);
             Console.WriteLine();
@@ -17,7 +15,7 @@ namespace SinglyLinkedList
             Console.WriteLine("Превый элемент: {0}", list1.First);
             Console.WriteLine();
 
-            Console.WriteLine("Последний элемент: {0}", list1.ElementAt(list1.Count - 1));
+            Console.WriteLine("Последний элемент: {0}", list1.GetElement(list1.Count - 1));
             Console.WriteLine();
 
             Console.WriteLine("Меняем последний элемент. Старое значениие: {0}", list1.SetAt(list1.Count - 1, 6));
@@ -42,7 +40,7 @@ namespace SinglyLinkedList
             Console.WriteLine(list1);
             Console.WriteLine();
 
-            Console.WriteLine("Удаление \"3\". Опреация успешна: {0}", list1.Remove(3));
+            Console.WriteLine("Удаление \"3\". Операция успешна: {0}", list1.Remove(3));
             Console.WriteLine("Тестовый список 1:");
             Console.WriteLine(list1);
             Console.WriteLine();
