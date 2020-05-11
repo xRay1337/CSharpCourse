@@ -18,7 +18,7 @@ namespace SinglyLinkedList
             Console.WriteLine("Последний элемент: {0}", list1.GetElement(list1.Count - 1));
             Console.WriteLine();
 
-            Console.WriteLine("Меняем последний элемент. Старое значениие: {0}", list1.SetAt(list1.Count - 1, 6));
+            Console.WriteLine("Меняем последний элемент. Старое значениие: {0}", list1.SetElement(list1.Count - 1, 6));
             Console.WriteLine("Тестовый список 1:");
             Console.WriteLine(list1);
             Console.WriteLine();
@@ -35,7 +35,7 @@ namespace SinglyLinkedList
             Console.WriteLine();
 
             Console.WriteLine("Вставка в конец.");
-            list1.InsertAt(list1.Count - 1, 5);
+            list1.InsertAt(list1.Count, 5);
             Console.WriteLine("Тестовый список 1:");
             Console.WriteLine(list1);
             Console.WriteLine();

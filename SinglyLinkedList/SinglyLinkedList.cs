@@ -16,7 +16,7 @@ namespace SinglyLinkedList
             {
                 if (first == null)
                 {
-                    throw new NullReferenceException("The list is empty.");
+                    throw new InvalidOperationException("The list is empty.");
                 }
 
                 return first.Data;
@@ -25,38 +25,22 @@ namespace SinglyLinkedList
 
         public int Count { get; private set; }
 
-        public void Add(T data)
-        {
-            modCount++;
-
-            var newItem = new ListItem<T>(data);
-
-            if (first == null)
-            {
-                first = newItem;
-            }
-            else
-            {
-                var last = first;
-
-                while (last.Next != null)
-                {
-                    last = last.Next;
-                }
-
-                last.Next = newItem;
-            }
-
-            Count++;
-        }
-
         public T GetElement(int index)
         {
+            return FindItem(index).Data;
+        }
+
+        public T SetElement(int index, T data)
+        {
             CheckIndex(index, Count);
+            modCount++;
 
-            var result = FindItem(index);
+            var current = FindItem(index);
 
-            return result.Data;
+            T oldData = current.Data;
+            current.Data = data;
+
+            return oldData;
         }
 
         public bool Remove(T data)
@@ -66,20 +50,18 @@ namespace SinglyLinkedList
                 return false;
             }
 
-            if (Equals(first.Data, null) && Equals(data, null) || first.Data.Equals(data))
+            if (Equals(first.Data, data))
             {
-                first = first.Next;
-                modCount++;
-                Count--;
+                RemoveFirst();
                 return true;
             }
 
             var prev = first;
             var current = first.Next;
 
-            for (int i = 1; i < Count - 1; i++)
+            for (var i = 1; i < Count - 1; i++)
             {
-                if ((Equals(current.Data, null) && Equals(data, null)) || current.Data.Equals(data))
+                if (Equals(current.Data, data))
                 {
                     prev.Next = current.Next;
                     modCount++;
@@ -101,9 +83,11 @@ namespace SinglyLinkedList
                 throw new InvalidOperationException("The list is empty.");
             }
 
-            T firstData = first.Data;
-            RemoveAt(0);
-            return firstData;
+            modCount++;
+            var deleted = first;
+            first = first.Next;
+            Count--;
+            return deleted.Data;
         }
 
         public T RemoveAt(int index)
@@ -113,41 +97,16 @@ namespace SinglyLinkedList
 
             if (index == 0)
             {
-                var deleted = first;
-                first = first.Next;
-                Count--;
-                return deleted.Data;
-            }
-
-            if (index == Count - 1)
-            {
-                var penultItem = FindItem(index - 1);
-                T deleted = penultItem.Next.Data;
-                penultItem.Next = null;
-                Count--;
-                return deleted;
+                return RemoveFirst();
             }
 
             var prev = FindItem(index - 1);
             var current = prev.Next;
 
             prev.Next = current.Next;
-
             Count--;
+
             return current.Data;
-        }
-
-        public T SetAt(int index, T data)
-        {
-            CheckIndex(index, Count);
-            modCount++;
-
-            var current = FindItem(index);
-
-            T oldData = current.Data;
-            current.Data = data;
-
-            return oldData;
         }
 
         public void InsertFirst(T data)
@@ -168,7 +127,7 @@ namespace SinglyLinkedList
                 return;
             }
 
-            var prev = FindItem(index);
+            var prev = FindItem(index - 1);
             var current = prev.Next;
             var newItem = new ListItem<T>(data);
 
@@ -176,6 +135,11 @@ namespace SinglyLinkedList
             newItem.Next = current;
 
             Count++;
+        }
+
+        public void Add(T data)
+        {
+            InsertAt(Count, data);
         }
 
         public void Reverse()
@@ -217,7 +181,7 @@ namespace SinglyLinkedList
             var currentOld = first.Next;
             var currentNew = newList.first;
 
-            for (int i = 1; i < Count; i++)
+            for (var i = 1; i < Count; i++)
             {
                 currentNew.Next = new ListItem<T>(currentOld.Data);
 
@@ -253,7 +217,7 @@ namespace SinglyLinkedList
             var prev = first;
             var current = first.Next;
 
-            for (int i = 1; i < index; i++)
+            for (var i = 1; i < index; i++)
             {
                 prev = current;
                 current = current.Next;
@@ -307,9 +271,9 @@ namespace SinglyLinkedList
             var thisItem = first;
             var inputItem = inputList.first;
 
-            for (int i = 0; i < Count; i++)
+            for (var i = 0; i < Count; i++)
             {
-                if (!thisItem.Data.Equals(inputItem.Data))
+                if (!Equals(inputItem.Data, thisItem.Data))
                 {
                     return false;
                 }
