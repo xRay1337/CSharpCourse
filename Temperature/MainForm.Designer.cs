@@ -31,12 +31,12 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             this.buttonMinimize = new System.Windows.Forms.Button();
             this.buttonClose = new System.Windows.Forms.Button();
-            this.labelC = new System.Windows.Forms.Label();
-            this.labelF = new System.Windows.Forms.Label();
-            this.labelK = new System.Windows.Forms.Label();
-            this.TextBoxCelsius = new System.Windows.Forms.TextBox();
-            this.TextBoxFahrenheit = new System.Windows.Forms.TextBox();
-            this.TextBoxKelvin = new System.Windows.Forms.TextBox();
+            this.label1 = new System.Windows.Forms.Label();
+            this.label2 = new System.Windows.Forms.Label();
+            this.label3 = new System.Windows.Forms.Label();
+            this.TextBox1 = new System.Windows.Forms.TextBox();
+            this.TextBox2 = new System.Windows.Forms.TextBox();
+            this.TextBox3 = new System.Windows.Forms.TextBox();
             this.Refresh = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
@@ -72,77 +72,80 @@
             this.buttonClose.UseVisualStyleBackColor = false;
             this.buttonClose.Click += new System.EventHandler(this.ButtonClose_Click);
             // 
-            // labelC
+            // label1
             // 
-            this.labelC.AutoSize = true;
-            this.labelC.Font = new System.Drawing.Font("Microsoft Sans Serif", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.labelC.ForeColor = System.Drawing.Color.White;
-            this.labelC.Location = new System.Drawing.Point(55, 93);
-            this.labelC.Margin = new System.Windows.Forms.Padding(3);
-            this.labelC.Name = "labelC";
-            this.labelC.Size = new System.Drawing.Size(38, 29);
-            this.labelC.TabIndex = 28;
-            this.labelC.Text = "°C";
+            this.label1.AutoSize = true;
+            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.label1.ForeColor = System.Drawing.Color.White;
+            this.label1.Location = new System.Drawing.Point(55, 93);
+            this.label1.Margin = new System.Windows.Forms.Padding(3);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(26, 29);
+            this.label1.TabIndex = 28;
+            this.label1.Text = "1";
             // 
-            // labelF
+            // label2
             // 
-            this.labelF.AutoSize = true;
-            this.labelF.Font = new System.Drawing.Font("Microsoft Sans Serif", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.labelF.ForeColor = System.Drawing.Color.White;
-            this.labelF.Location = new System.Drawing.Point(55, 148);
-            this.labelF.Margin = new System.Windows.Forms.Padding(3);
-            this.labelF.Name = "labelF";
-            this.labelF.Size = new System.Drawing.Size(36, 29);
-            this.labelF.TabIndex = 30;
-            this.labelF.Text = "°F";
+            this.label2.AutoSize = true;
+            this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.label2.ForeColor = System.Drawing.Color.White;
+            this.label2.Location = new System.Drawing.Point(55, 148);
+            this.label2.Margin = new System.Windows.Forms.Padding(3);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(26, 29);
+            this.label2.TabIndex = 30;
+            this.label2.Text = "2";
             // 
-            // labelK
+            // label3
             // 
-            this.labelK.AutoSize = true;
-            this.labelK.Font = new System.Drawing.Font("Microsoft Sans Serif", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.labelK.ForeColor = System.Drawing.Color.White;
-            this.labelK.Location = new System.Drawing.Point(54, 203);
-            this.labelK.Margin = new System.Windows.Forms.Padding(3);
-            this.labelK.Name = "labelK";
-            this.labelK.Size = new System.Drawing.Size(37, 29);
-            this.labelK.TabIndex = 32;
-            this.labelK.Text = "°K";
+            this.label3.AutoSize = true;
+            this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.label3.ForeColor = System.Drawing.Color.White;
+            this.label3.Location = new System.Drawing.Point(54, 203);
+            this.label3.Margin = new System.Windows.Forms.Padding(3);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(26, 29);
+            this.label3.TabIndex = 32;
+            this.label3.Text = "3";
             // 
-            // TextBoxCelsius
+            // TextBox1
             // 
-            this.TextBoxCelsius.BackColor = System.Drawing.Color.Black;
-            this.TextBoxCelsius.Font = new System.Drawing.Font("Microsoft Sans Serif", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.TextBoxCelsius.ForeColor = System.Drawing.Color.White;
-            this.TextBoxCelsius.Location = new System.Drawing.Point(106, 90);
-            this.TextBoxCelsius.Margin = new System.Windows.Forms.Padding(10);
-            this.TextBoxCelsius.Name = "TextBoxCelsius";
-            this.TextBoxCelsius.Size = new System.Drawing.Size(140, 35);
-            this.TextBoxCelsius.TabIndex = 34;
-            this.TextBoxCelsius.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.TextBoxCelsius_KeyPress);
+            this.TextBox1.BackColor = System.Drawing.Color.Black;
+            this.TextBox1.Font = new System.Drawing.Font("Microsoft Sans Serif", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.TextBox1.ForeColor = System.Drawing.Color.White;
+            this.TextBox1.Location = new System.Drawing.Point(106, 90);
+            this.TextBox1.Margin = new System.Windows.Forms.Padding(10);
+            this.TextBox1.Name = "TextBox1";
+            this.TextBox1.Size = new System.Drawing.Size(140, 35);
+            this.TextBox1.TabIndex = 34;
+            this.TextBox1.KeyDown += new System.Windows.Forms.KeyEventHandler(this.TextBox1_KeyDown);
+            this.TextBox1.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.TextBox1_KeyPress);
             // 
-            // TextBoxFahrenheit
+            // TextBox2
             // 
-            this.TextBoxFahrenheit.BackColor = System.Drawing.Color.Black;
-            this.TextBoxFahrenheit.Font = new System.Drawing.Font("Microsoft Sans Serif", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.TextBoxFahrenheit.ForeColor = System.Drawing.Color.White;
-            this.TextBoxFahrenheit.Location = new System.Drawing.Point(106, 145);
-            this.TextBoxFahrenheit.Margin = new System.Windows.Forms.Padding(10);
-            this.TextBoxFahrenheit.Name = "TextBoxFahrenheit";
-            this.TextBoxFahrenheit.Size = new System.Drawing.Size(140, 35);
-            this.TextBoxFahrenheit.TabIndex = 35;
-            this.TextBoxFahrenheit.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.TextBoxFahrenheit_KeyPress);
+            this.TextBox2.BackColor = System.Drawing.Color.Black;
+            this.TextBox2.Font = new System.Drawing.Font("Microsoft Sans Serif", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.TextBox2.ForeColor = System.Drawing.Color.White;
+            this.TextBox2.Location = new System.Drawing.Point(106, 145);
+            this.TextBox2.Margin = new System.Windows.Forms.Padding(10);
+            this.TextBox2.Name = "TextBox2";
+            this.TextBox2.Size = new System.Drawing.Size(140, 35);
+            this.TextBox2.TabIndex = 35;
+            this.TextBox2.KeyDown += new System.Windows.Forms.KeyEventHandler(this.TextBox1_KeyDown);
+            this.TextBox2.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.TextBox2_KeyPress);
             // 
-            // TextBoxKelvin
+            // TextBox3
             // 
-            this.TextBoxKelvin.BackColor = System.Drawing.Color.Black;
-            this.TextBoxKelvin.Font = new System.Drawing.Font("Microsoft Sans Serif", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.TextBoxKelvin.ForeColor = System.Drawing.Color.White;
-            this.TextBoxKelvin.Location = new System.Drawing.Point(104, 200);
-            this.TextBoxKelvin.Margin = new System.Windows.Forms.Padding(10);
-            this.TextBoxKelvin.Name = "TextBoxKelvin";
-            this.TextBoxKelvin.Size = new System.Drawing.Size(140, 35);
-            this.TextBoxKelvin.TabIndex = 36;
-            this.TextBoxKelvin.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.TextBoxKelvin_KeyPress);
+            this.TextBox3.BackColor = System.Drawing.Color.Black;
+            this.TextBox3.Font = new System.Drawing.Font("Microsoft Sans Serif", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.TextBox3.ForeColor = System.Drawing.Color.White;
+            this.TextBox3.Location = new System.Drawing.Point(104, 200);
+            this.TextBox3.Margin = new System.Windows.Forms.Padding(10);
+            this.TextBox3.Name = "TextBox3";
+            this.TextBox3.Size = new System.Drawing.Size(140, 35);
+            this.TextBox3.TabIndex = 36;
+            this.TextBox3.KeyDown += new System.Windows.Forms.KeyEventHandler(this.TextBox1_KeyDown);
+            this.TextBox3.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.TextBox3_KeyPress);
             // 
             // Refresh
             // 
@@ -152,7 +155,7 @@
             this.Refresh.ForeColor = System.Drawing.Color.White;
             this.Refresh.Location = new System.Drawing.Point(62, 255);
             this.Refresh.Margin = new System.Windows.Forms.Padding(10);
-            this.Refresh.Name = "Refrash";
+            this.Refresh.Name = "Refresh";
             this.Refresh.Size = new System.Drawing.Size(182, 35);
             this.Refresh.TabIndex = 37;
             this.Refresh.Text = "Refresh";
@@ -166,12 +169,12 @@
             this.BackColor = System.Drawing.Color.Black;
             this.ClientSize = new System.Drawing.Size(300, 380);
             this.Controls.Add(this.Refresh);
-            this.Controls.Add(this.TextBoxKelvin);
-            this.Controls.Add(this.TextBoxFahrenheit);
-            this.Controls.Add(this.TextBoxCelsius);
-            this.Controls.Add(this.labelK);
-            this.Controls.Add(this.labelF);
-            this.Controls.Add(this.labelC);
+            this.Controls.Add(this.TextBox3);
+            this.Controls.Add(this.TextBox2);
+            this.Controls.Add(this.TextBox1);
+            this.Controls.Add(this.label3);
+            this.Controls.Add(this.label2);
+            this.Controls.Add(this.label1);
             this.Controls.Add(this.buttonMinimize);
             this.Controls.Add(this.buttonClose);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
@@ -189,12 +192,12 @@
 
         private System.Windows.Forms.Button buttonMinimize;
         private System.Windows.Forms.Button buttonClose;
-        private System.Windows.Forms.Label labelC;
-        private System.Windows.Forms.Label labelF;
-        private System.Windows.Forms.Label labelK;
-        private System.Windows.Forms.TextBox TextBoxCelsius;
-        private System.Windows.Forms.TextBox TextBoxFahrenheit;
-        private System.Windows.Forms.TextBox TextBoxKelvin;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.TextBox TextBox1;
+        private System.Windows.Forms.TextBox TextBox2;
+        private System.Windows.Forms.TextBox TextBox3;
         private System.Windows.Forms.Button Refresh;
     }
 }

@@ -2,11 +2,18 @@
 using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
+using Temperature.Model;
+using Temperature.Controller;
 
 namespace Temperature
 {
     public partial class MainForm : Form
     {
+        private static bool refresh = true;
+        private static Label[] labels;
+        private static TextBox[] textBoxes;
+        private static IScale[] scales;
+
         public MainForm()
         {
             InitializeComponent();
@@ -26,9 +33,68 @@ namespace Temperature
                     button.ForeColor = Color.White;
                 };
             }
+
+            labels = new Label[] { label1, label2, label3 };
+            textBoxes = new TextBox[] { TextBox1, TextBox2, TextBox3 };
+            scales = ScalesControl.GetScales();
+
+            RefreshDisplay();
+            ClearAllTextBoxes();
         }
 
-        private static bool refresh = true;
+
+        private void RefreshDisplay()
+        {
+            for (int i = 0; i < textBoxes.Length; i++)
+            {
+                labels[i].Text = scales[i].Name;
+                textBoxes[i].Text = scales[i].Degrees.ToString();
+            }
+        }
+
+        private void RefreshScales()
+        {
+            double celsius = 0;
+
+            for (int i = 0; i < textBoxes.Length; i++)
+            {
+                if (textBoxes[i].Text != "")
+                {
+                    scales[i].Degrees = Convert.ToDouble(textBoxes[i].Text);
+                    celsius = scales[i].ConvertToCelsius();
+                    break;
+                }
+            }
+
+            for (int i = 0; i < textBoxes.Length; i++)
+            {
+                scales[i].Degrees = scales[i].ConvertFromCelsius(celsius);
+
+                textBoxes[i].Text = $"{scales[i].Degrees:f2}";
+            }
+
+            refresh = false;
+            Refresh.Text = "Clear";
+        }
+
+        private void Refresh_Click(object sender, EventArgs e)
+        {
+            if ((TextBox1.Text == "" && TextBox2.Text == "" && TextBox3.Text == "") ||
+                (TextBox1.Text == "-" || TextBox2.Text == "-" || TextBox3.Text == "-"))
+            {
+                ClearAllTextBoxes();
+                return;
+            }
+
+            if (refresh)
+            {
+                RefreshScales();
+            }
+            else
+            {
+                ClearAllTextBoxes();
+            }
+        }
 
         private void MainForm_MouseDown(object sender, MouseEventArgs e)
         {
@@ -37,81 +103,36 @@ namespace Temperature
             WndProc(ref m);
         }
 
-        private void TextBoxCelsius_KeyPress(object sender, KeyPressEventArgs e)
+        private void TextBox1_KeyPress(object sender, KeyPressEventArgs e)
         {
-            TextBoxFahrenheit.Clear();
-            TextBoxKelvin.Clear();
+            TextBox2.Clear();
+            TextBox3.Clear();
             Util.CheckEditSymbol(sender, e);
-
-            refresh = false;
-            Refresh.Text = "Clear";
         }
 
-        private void TextBoxFahrenheit_KeyPress(object sender, KeyPressEventArgs e)
+        private void TextBox2_KeyPress(object sender, KeyPressEventArgs e)
         {
-            TextBoxCelsius.Clear();
-            TextBoxKelvin.Clear();
+            TextBox1.Clear();
+            TextBox3.Clear();
             Util.CheckEditSymbol(sender, e);
-
-            refresh = false;
-            Refresh.Text = "Clear";
         }
 
-        private void TextBoxKelvin_KeyPress(object sender, KeyPressEventArgs e)
+        private void TextBox3_KeyPress(object sender, KeyPressEventArgs e)
         {
-            TextBoxCelsius.Clear();
-            TextBoxFahrenheit.Clear();
+            TextBox1.Clear();
+            TextBox2.Clear();
             Util.CheckEditSymbol(sender, e);
-
-            refresh = false;
-            Refresh.Text = "Clear";
-        }
-
-        private void Refresh_Click(object sender, EventArgs e)
-        {
-            if ((TextBoxCelsius.Text == "" && TextBoxFahrenheit.Text == "" && TextBoxKelvin.Text == "") ||
-                (TextBoxCelsius.Text == "-" || TextBoxFahrenheit.Text == "-" || TextBoxKelvin.Text == "-"))
-            {
-                ClearAllTextBoxes();
-                return;
-            }
-
-            if (refresh)
-            {
-                IScales scales;
-
-                if (TextBoxCelsius.Text != "")
-                {
-                    scales = new Celsius(Convert.ToDouble(TextBoxCelsius.Text.Replace('.', ',')));
-                }
-                else if (TextBoxFahrenheit.Text != "")
-                {
-                    scales = new Fahrenheit(Convert.ToDouble(TextBoxFahrenheit.Text.Replace('.', ',')));
-                }
-                else
-                {
-                    scales = new Kelvin(Convert.ToDouble(TextBoxKelvin.Text.Replace('.', ',')));
-                }
-
-                TextBoxCelsius.Text = $"{scales.GetCelsius():f2}";
-                TextBoxFahrenheit.Text = $"{scales.GetFahrenheit():f2}";
-                TextBoxKelvin.Text = $"{scales.GetKelvin():f2}";
-            }
-            else
-            {
-                ClearAllTextBoxes();
-            }
-
-            refresh = !refresh;
-            Refresh.Text = refresh ? "Refresh" : "Clear";
         }
 
         private void ClearAllTextBoxes()
         {
-            foreach (TextBox textBox in Controls.OfType<TextBox>())
+            foreach (var textBox in textBoxes)
             {
                 textBox.Clear();
             }
+
+            refresh = true;
+            Refresh.Text = "Refresh";
         }
 
         private void ButtonMinimize_Click(object sender, EventArgs e)
@@ -122,6 +143,14 @@ namespace Temperature
         private void ButtonClose_Click(object sender, EventArgs e)
         {
             Application.Exit();
+        }
+
+        private void TextBox1_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyData == Keys.Back || e.KeyData == Keys.Delete)
+            {
+                ClearAllTextBoxes();
+            }
         }
     }
 }
