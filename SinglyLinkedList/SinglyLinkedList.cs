@@ -32,12 +32,11 @@ namespace SinglyLinkedList
 
         public T SetElement(int index, T data)
         {
-            CheckIndex(index, Count);
             modCount++;
 
             var current = FindItem(index);
 
-            T oldData = current.Data;
+            var oldData = current.Data;
             current.Data = data;
 
             return oldData;
@@ -50,7 +49,7 @@ namespace SinglyLinkedList
                 return false;
             }
 
-            if (Equals(first.Data, data))
+            if (Equals(first.Data, data) || (first.Data == null && data == null))
             {
                 RemoveFirst();
                 return true;
@@ -59,7 +58,7 @@ namespace SinglyLinkedList
             var prev = first;
             var current = first.Next;
 
-            for (var i = 1; i < Count - 1; i++)
+            for (var i = 1; i < Count; i++)
             {
                 if (Equals(current.Data, data))
                 {
@@ -92,14 +91,14 @@ namespace SinglyLinkedList
 
         public T RemoveAt(int index)
         {
-            CheckIndex(index, Count);
-            modCount++;
+            CheckIndex(index, Count - 1);
 
             if (index == 0)
             {
                 return RemoveFirst();
             }
 
+            modCount++;
             var prev = FindItem(index - 1);
             var current = prev.Next;
 
@@ -118,8 +117,7 @@ namespace SinglyLinkedList
 
         public void InsertAt(int index, T data)
         {
-            CheckIndex(index, Count + 1);
-            modCount++;
+            CheckIndex(index, Count);
 
             if (index == 0)
             {
@@ -127,6 +125,7 @@ namespace SinglyLinkedList
                 return;
             }
 
+            modCount++;
             var prev = FindItem(index - 1);
             var current = prev.Next;
             var newItem = new ListItem<T>(data);
@@ -189,6 +188,8 @@ namespace SinglyLinkedList
                 currentNew = currentNew.Next;
             }
 
+            newList.Count = Count;
+
             return newList;
         }
 
@@ -199,7 +200,7 @@ namespace SinglyLinkedList
                 throw new ArgumentException("Index cannot be negative.", nameof(index));
             }
 
-            if (index >= maxIndex)
+            if (index > maxIndex)
             {
                 throw new IndexOutOfRangeException($"The index should not exceed {Count}.");
             }
@@ -207,19 +208,17 @@ namespace SinglyLinkedList
 
         private ListItem<T> FindItem(int index)
         {
-            CheckIndex(index, Count);
+            CheckIndex(index, Count - 1);
 
             if (index == 0)
             {
                 return first;
             }
 
-            var prev = first;
             var current = first.Next;
 
             for (var i = 1; i < index; i++)
             {
-                prev = current;
                 current = current.Next;
             }
 
@@ -292,6 +291,11 @@ namespace SinglyLinkedList
 
             foreach (var e in this)
             {
+                if (e == null)
+                {
+                    continue;
+                }
+
                 hash = prime * hash + e.GetHashCode();
             }
 

@@ -8,10 +8,6 @@ namespace SinglyLinkedList
         {
             SinglyLinkedList<int> list1 = new SinglyLinkedList<int> { 1, 2, 3, 4, 5 };
 
-            Console.WriteLine("Тестовый список 1:");
-            Console.WriteLine(list1);
-            Console.WriteLine();
-
             Console.WriteLine("Превый элемент: {0}", list1.First);
             Console.WriteLine();
 
@@ -50,14 +46,18 @@ namespace SinglyLinkedList
             Console.WriteLine(list1);
             Console.WriteLine();
 
+            Console.WriteLine("Удаляем последний элемент. Старое значениие: {0}", list1.RemoveAt(list1.Count - 1));
+            Console.WriteLine("Тестовый список 1:");
+            Console.WriteLine(list1);
+            Console.WriteLine();
+
             Console.WriteLine("Список 1 в обратном порядке:");
             list1.Reverse();
             Console.WriteLine(list1);
             Console.WriteLine();
 
             Console.WriteLine("Список 2 - копия списка 1:");
-            SinglyLinkedList<int> list3 = new SinglyLinkedList<int>();
-            SinglyLinkedList<int> list2 = list3.Copy();
+            SinglyLinkedList<int> list2 = list1.Copy();
             Console.WriteLine(list2);
 
             Console.ReadKey();
