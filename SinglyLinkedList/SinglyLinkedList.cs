@@ -32,9 +32,9 @@ namespace SinglyLinkedList
 
         public T SetElement(int index, T data)
         {
-            modCount++;
-
             var current = FindItem(index);
+
+            modCount++;
 
             var oldData = current.Data;
             current.Data = data;
@@ -49,7 +49,7 @@ namespace SinglyLinkedList
                 return false;
             }
 
-            if (Equals(first.Data, data) || (first.Data == null && data == null))
+            if (Equals(first.Data, data))
             {
                 RemoveFirst();
                 return true;
@@ -143,7 +143,7 @@ namespace SinglyLinkedList
 
         public void Reverse()
         {
-            if (Count == 0 || Count == 1)
+            if (Count <= 1)
             {
                 return;
             }
